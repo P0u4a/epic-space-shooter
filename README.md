@@ -7,7 +7,7 @@
 ### Prerequisites
 - Install Conan with ```pip install conan``` on Windows or ```brew install conan``` on macOS
 - Install Cmake from [here](https://cmake.org/download/) if you are on Windows. Ensure Cmake is added to PATH. 
-    - If you are using MacOS, install with ```brew install cmake```
+    - If you are using macOS, install with ```brew install cmake```
 
 ### Setting up Conan
 
