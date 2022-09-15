@@ -5,8 +5,9 @@
 ## Building
 
 ### Prerequisites
-- Install Conan with ```pip install conan ```
-- Install Cmake from [here](https://cmake.org/download/). Ensure Cmake is added to PATH
+- Install Conan with ```pip install conan```. Mac users can also use ```brew install conan```.
+- Install Cmake from [here](https://cmake.org/download/), ensuring Cmake is added to PATH. 
+  If you are using macOS, you can also install with ```brew install cmake```.
 
 ### Setting up Conan
 
