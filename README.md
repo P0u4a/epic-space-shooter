@@ -4,6 +4,10 @@
 
 ## Building
 
+### Prerequisites
+- Install Conan with ```pip install conan ```
+- Install Cmake from [here](https://cmake.org/download/). Ensure Cmake is added to PATH
+
 ### Setting up Conan
 
 If you haven't already, set up a Conan profile.
