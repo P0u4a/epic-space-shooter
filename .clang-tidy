@@ -22,6 +22,7 @@ Checks: "
   -cppcoreguidelines-owning-memory,
   -google-readability-todo,
   -llvm-header-guard,
+  -llvm-include-order,
   -modernize-use-trailing-return-type,
   -readability-avoid-const-params-in-decls,
   -readability-braces-around-statements,
