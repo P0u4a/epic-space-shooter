@@ -17,7 +17,7 @@ conan profile new default --detect
 ```sh
 mkdir build
 cd build
-conan install ..
+conan install .. --build=missing 
 ```
 
 ### Running the build
