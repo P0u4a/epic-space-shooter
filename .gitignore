@@ -43,12 +43,15 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+build
 
 # Snyk
 .dccache
 
 # VSCode
-.vscode/*
+.vscode
+.vs
+.cache
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
