@@ -1,12 +1,37 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(Epic-Space-Shooter
+if(NOT MACOS)
+    list(APPEND LANGUAGES CXX)
+else()
+    # Macos specific rules. For more information on how these rules were
+    # selected, see: https://github.com/GAIGResearch/Stratega/issues/108,
+    # https://stratega.readthedocs.io/en/latest/gettingStarted/installation/index.html,
+    # https://github.com/bincrafters/community/issues/534
+    message("Building for MACOS")
+    list(APPEND LANGUAGES C CXX OBJC OBJCXX)
+    enable_language(OBJC)
+    enable_language(OBJCXX)
+    set(CMAKE_CXX_COMPILER_VERSION 13.0)
+
+    if(ARM)
+        message("Building for ARM")
+        set(CMAKE_OSX_ARCHITECTURES "arm64")
+        option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" ON)
+        option(SGA_BUILD_SFML_FROM_SOURCE "Compile SFML 2.6.x" ON)
+    endif()
+
+endif()
+
+project(
+    Epic-Space-Shooter
     VERSION 1.0
     DESCRIPTION "OOP Group project"
-    LANGUAGES CXX)
+    LANGUAGES ${LANGUAGES})
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CONAN_DISABLE_CHECK_COMPILER TRUE)
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 
