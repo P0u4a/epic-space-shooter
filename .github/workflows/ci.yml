@@ -25,7 +25,7 @@ jobs:
       - name: install-prerequisites
         run: |
           sudo apt update && sudo apt install -y \
-          clang clang-format clang-tidy cmake iwyu linudev-dev libgl-dev \
+          clang clang-format clang-tidy cmake iwyu libudev-dev libgl-dev \
           libx11-xcb-dev libfontenc-dev libice-dev libsm-dev libxaw7-dev \
           libxcomposite-dev libxcursor-dev libxdamage-dev libxfixes-dev \
           libxi-dev libxinerama-dev libxkbfile-dev libxmu-dev libxmuu-dev \
