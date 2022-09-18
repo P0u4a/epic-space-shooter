@@ -156,7 +156,8 @@ def main(compilation_db_path, source_files, verbose, iwyu_args):
     try:
         for entry in entries:
             cwd, compile_command = entry['directory'], entry['command']
-            run_iwyu(cwd, compile_command, iwyu_args, verbose)
+            ret = run_iwyu(cwd, compile_command, iwyu_args, verbose)
+            return ret.returncode
     except OSError as why:
         print('ERROR: Failed to launch include-what-you-use: %s' % why)
         return 1
@@ -212,6 +213,7 @@ def _bootstrap():
 
     argv, iwyu_args = partition_args(sys.argv[1:])
     args = parser.parse_args(argv)
+    iwyu_args = ['--cxx17ns', '--error=1']
     sys.exit(main(args.dbpath, args.source, args.verbose, iwyu_args))
 
 
