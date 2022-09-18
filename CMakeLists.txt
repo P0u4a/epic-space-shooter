@@ -40,17 +40,21 @@ file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS src/*.cpp src/*.hpp)
 
 if(CMAKE_BUILD_TYPE MATCHES "Release")
     message("Linting enabled")
-    set(TARGET CMAKE_CXX_CLANG_TIDY clang-tidy)
     find_program(IWYU_PATH NAMES include-what-you-use iwyu REQUIRED)
+    find_program(PYTHON_PATH NAMES python python3 REQUIRED)
+    find_program(NAMES clang-tidy REQUIRED)
+    find_program(NAMES clang-format REQUIRED)
+    set(CMAKE_CXX_CLANG_TIDY clang-tidy)
     add_custom_target(
         iwyu ALL
-        COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/tools/iwyu-tool.py -p
+        COMMAND ${PYTHON_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/tools/iwyu-tool.py -p
                 ${CMAKE_BINARY_DIR}
         COMMENT "Checking include-what-you-use")
     add_custom_target(
         clang-format ALL
-        COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/tools/run-clang-format.py
-                ${SOURCE_FILES}
+        COMMAND
+            ${PYTHON_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/tools/run-clang-format.py
+            ${SOURCE_FILES}
         COMMENT "Checking formatting")
 endif()
 
