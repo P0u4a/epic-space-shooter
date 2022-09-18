@@ -50,6 +50,7 @@ build
 
 # VSCode
 .vscode
+.vsconan
 .vs
 .cache
 !.vscode/settings.json
