@@ -32,13 +32,32 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CONAN_DISABLE_CHECK_COMPILER TRUE)
+set(CONAN_SYSTEM_INCLUDES ON) # Prevent linting dependencies
+set(CMAKE_COLOR_MAKEFILE ON)
+set(CMAKE_COLOR_DIAGNOSTICS ON)
+
+file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS src/*.cpp src/*.hpp)
+
+if(CMAKE_BUILD_TYPE MATCHES "Release")
+    message("Linting enabled")
+    set(TARGET CMAKE_CXX_CLANG_TIDY clang-tidy)
+    find_program(IWYU_PATH NAMES include-what-you-use iwyu REQUIRED)
+    add_custom_target(
+        iwyu ALL
+        COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/tools/iwyu-tool.py -p
+                ${CMAKE_BINARY_DIR}
+        COMMENT "Checking include-what-you-use")
+    add_custom_target(
+        clang-format ALL
+        COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/tools/run-clang-format.py
+                ${SOURCE_FILES}
+        COMMENT "Checking formatting")
+endif()
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
-
-file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS src/*.cpp src/*.hpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
