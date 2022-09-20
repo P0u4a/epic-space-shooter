@@ -21,6 +21,7 @@ Checks: "
   -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-owning-memory,
   -google-readability-todo,
+  -google-readability-braces-around-statements,
   -llvm-header-guard,
   -llvm-include-order,
   -modernize-use-trailing-return-type,
@@ -67,3 +68,4 @@ CheckOptions:
   - key: readability-identifier-naming.PrivateMemberPrefix
     value: _
 FormatStyle: "file"
+WarningsAsErrors: "*"

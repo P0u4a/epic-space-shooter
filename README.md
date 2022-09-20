@@ -8,6 +8,7 @@
 - Install Conan with ```pip install conan```. Mac users can also use ```brew install conan```.
 - Install Cmake from [here](https://cmake.org/download/), ensuring Cmake is added to PATH. 
   If you are using macOS, you can also install with ```brew install cmake```.
+- Linting requires Python, clang-format, clang-tidy, and [include-what-you-use](https://include-what-you-use.org/) to be installed and added to PATH.
 
 ### Setting up Conan
 
@@ -22,20 +23,23 @@ conan profile new default --detect
 ```sh
 mkdir build
 cd build
-conan install .. --build=missing 
+conan install .. --build=missing
 ```
+
+If you're building for MacOS, you'll have to copy the `.dylib` files generated in `build/bin` over to `/usr/local/lib`.
 
 ### Running the build
 
 ```sh
-cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release
 ```
 
-On Windows, you might have to instead try
+Building for release will include a linting pass, which requires clang-format, clang-tidy, include-what-you-use, and Python to be available in PATH.
+
+If you're building for MacOS, you'll have to add a couple of extra flags when building relevant to your system:
 
 ```sh
-cmake -S . -B build -G "Visual Studio 15 2017" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMACOS=TRUE -DARM=TRUE
 ```
-
-if using Visual Studio 15 2017 for example, and it matches your default profile, or you can use "Unix Makefiles" for linux and mac as an alternative. More information [here](https://docs.conan.io/en/1.7/getting_started.html).
+Where `-DMACOS` sets up CMake to build for Mac, and `-DARM` is needed if you're using Apple silicon.
