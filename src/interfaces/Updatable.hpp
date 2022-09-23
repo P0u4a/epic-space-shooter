@@ -1,15 +1,11 @@
-#ifndef SRC_INTERFACES_UPDATEABLE_HPP
-#define SRC_INTERFACES_UPDATEABLE_HPP
+#ifndef SRC_INTERFACES_UPDATABLE_HPP
+#define SRC_INTERFACES_UPDATABLE_HPP
 
-class Updatable {
+#include <SFML/Graphics/Sprite.hpp>
+
+class Updatable : public sf::Sprite {
   public:
-    Updatable();
-    Updatable(const Updatable &) = delete;
-    Updatable(Updatable &&) = default;
-    Updatable &operator=(const Updatable &) = delete;
-    Updatable &operator=(Updatable &&) = default;
     virtual void update() = 0;
-    virtual ~Updatable() = default;
 };
 
-#endif // SRC_INTERFACES_UPDATEABLE_HPP
+#endif // SRC_INTERFACES_UPDATABLE_HPP
