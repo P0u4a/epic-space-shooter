@@ -16,7 +16,7 @@ jobs:
         run: echo "Some files failed the linting checks!"
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -24,12 +24,9 @@ jobs:
           python-version: "3.10"
       - name: install-prerequisites
         run: |
-          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
           sudo apt update
-          sudo apt install -y clang-14 clang-tools-14 \
-          libclang-common-14-dev libclang-14-dev \
-          clang-format-14 clang-tidy-14 llvm-14-dev
-          sudo apt install -y cmake iwyu libudev-dev libgl-dev \
+          sudo apt install -y \
+          clang clang-format clang-tidy cmake iwyu libudev-dev libgl-dev \
           libx11-xcb-dev libfontenc-dev libice-dev libsm-dev libxaw7-dev \
           libxcomposite-dev libxcursor-dev libxdamage-dev libxfixes-dev \
           libxi-dev libxinerama-dev libxkbfile-dev libxmu-dev libxmuu-dev \
