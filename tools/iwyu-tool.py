@@ -213,7 +213,7 @@ def _bootstrap():
 
     argv, iwyu_args = partition_args(sys.argv[1:])
     args = parser.parse_args(argv)
-    iwyu_args = ['--cxx17ns']
+    iwyu_args = ['--cxx17ns', '--error=1']
     sys.exit(main(args.dbpath, args.source, args.verbose, iwyu_args))
 
 

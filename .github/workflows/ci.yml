@@ -40,4 +40,4 @@ jobs:
       - name: install-dependencies
         run: mkdir build && cd build && conan install .. --build=missing && cd ..
       - name: build
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCI=1 && cmake --build build --config Release

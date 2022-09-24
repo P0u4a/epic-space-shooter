@@ -45,11 +45,14 @@ if(CMAKE_BUILD_TYPE MATCHES "Release")
     find_program(NAMES clang-tidy REQUIRED)
     find_program(NAMES clang-format REQUIRED)
     set(CMAKE_CXX_CLANG_TIDY clang-tidy)
-    add_custom_target(
-        iwyu ALL
-        COMMAND ${PYTHON_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/tools/iwyu-tool.py -p
+    if(NOT CI)
+        add_custom_target(
+            iwyu ALL
+            COMMAND
+                ${PYTHON_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/tools/iwyu-tool.py -p
                 ${CMAKE_BINARY_DIR}
-        COMMENT "Checking include-what-you-use")
+            COMMENT "Checking include-what-you-use")
+    endif()
     add_custom_target(
         clang-format ALL
         COMMAND
