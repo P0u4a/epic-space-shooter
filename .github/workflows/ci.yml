@@ -1,22 +1,8 @@
 name: CI
 on: pull_request
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: cpp-linter/cpp-linter-action@v2
-        id: linter
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          style: file
-      - name: Fail fast?!
-        if: steps.linter.outputs.checks-failed > 0
-        run: echo "Some files failed the linting checks!"
-
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -24,7 +10,8 @@ jobs:
           python-version: "3.10"
       - name: install-prerequisites
         run: |
-          sudo apt update && sudo apt install -y \
+          sudo apt update
+          sudo apt install -y \
           clang clang-format clang-tidy cmake iwyu libudev-dev libgl-dev \
           libx11-xcb-dev libfontenc-dev libice-dev libsm-dev libxaw7-dev \
           libxcomposite-dev libxcursor-dev libxdamage-dev libxfixes-dev \
@@ -36,8 +23,16 @@ jobs:
           libxcb-shape0-dev libxcb-sync-dev libxcb-xfixes0-dev libxss-dev \
           libxcb-xinerama0-dev libxcb-dri3-dev libxcb-util0-dev libxcb-util-dev
       - name: install-conan
-        run: pip install conan && conan profile new default --detect
+        run: |
+          pip install conan
+          conan profile new default --detect
       - name: install-dependencies
-        run: mkdir build && cd build && conan install .. --build=missing && cd ..
+        run: |
+          mkdir build
+          cd build
+          conan install .. --build=missing
+          cd ..
       - name: build
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCI=1
+          cmake --build build --config Release

@@ -19,13 +19,13 @@ Checks: "
   portability-std-allocator-const,
   -bugprone-easily-swappable-parameters,
   -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-non-private-member-variables-in-classes,
   -cppcoreguidelines-owning-memory,
   -google-readability-todo,
   -google-readability-braces-around-statements,
-  -llvm-header-guard,
   -llvm-include-order,
+  -misc-non-private-member-variables-in-classes,
   -modernize-use-trailing-return-type,
-  -readability-avoid-const-params-in-decls,
   -readability-braces-around-statements,
   -readability-function-cognitive-complexity,
   -readability-function-size,
@@ -61,6 +61,10 @@ CheckOptions:
     value: CamelCase
   - key: readability-identifier-naming.ConstantPrefix
     value: k
+  - key: readability-identifier-naming.LocalConstantCase
+    value: lower_case
+  - key: readability-identifier-naming.LocalConstantPrefix
+    value: ""
   - key: readability-identifier-naming.NamespaceCase
     value: lower_case
   - key: readability-identifier-naming.MacroDefinitionCase
