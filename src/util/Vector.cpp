@@ -21,11 +21,6 @@ void Vector2f::setWithCappedMagnitude(const Vector2f &new_vector, float max_magn
         this->set(new_vector);
 }
 
-Vector2f Vector2f::operator*(float scalar) {
-    Vector2f scaled(this->x * scalar, this->y * scalar);
-    return scaled;
-}
-
 Vector2f operator*(const Vector2f &left, float right) {
     return {left.x * right, left.y * right};
 }

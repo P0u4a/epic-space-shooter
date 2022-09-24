@@ -8,6 +8,7 @@
  */
 class Vector2f : public sf::Vector2f {
   public:
+    Vector2f() : sf::Vector2f(0, 0){};
     Vector2f(float x, float y) : sf::Vector2f(x, y){};
 
     /**
@@ -32,32 +33,9 @@ class Vector2f : public sf::Vector2f {
      * new_vector is greater than that of max_magnitude, its magnitude will be set to max_magnitude
      */
     void setWithCappedMagnitude(const Vector2f &new_vector, float max_magnitude);
-
-    /**
-     * @brief Multiply vector by a scalar
-     *
-     * @param scalar Scalar to multiply by
-     * @return The multiplied vector
-     */
-    Vector2f operator*(float scalar);
 };
 
-/**
- * @brief Multiplication operator overload
- *
- * @param left The vector to multiply
- * @param right The scalar to multiply the vector by
- * @return The multiplied vector
- */
 Vector2f operator*(const Vector2f &left, float right);
-
-/**
- * @brief Multiplication operator overload
- *
- * @param left The scalar to multiply the vector by
- * @param right The vector to multiply
- * @return The multiplied vector
- */
 Vector2f operator*(float left, const Vector2f &right);
 
 #endif // SRC_UTIL_VECTOR_HPP
