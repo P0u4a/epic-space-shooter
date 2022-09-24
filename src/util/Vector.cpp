@@ -3,7 +3,7 @@
 #include <cmath>
 
 float Vector2f::magnitude() const {
-    return std::sqrtf((this->x * this->x) + (this->y * this->y));
+    return std::sqrt((this->x * this->x) + (this->y * this->y));
 }
 
 void Vector2f::set(const Vector2f &new_vector) {
