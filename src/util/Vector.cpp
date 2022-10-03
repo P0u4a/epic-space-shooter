@@ -20,7 +20,6 @@ void Vector2f::setWithCappedMagnitude(const Vector2f &new_vector, float max_magn
                    Math::Q_rsqrt((new_vector.x * new_vector.x) + (new_vector.y * new_vector.y)) *
                    new_vector));
 
-
     // Set the vector to the new vector - no need to modify magnitude less than max
     else
         this->set(new_vector);
