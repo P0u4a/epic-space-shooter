@@ -1,6 +1,7 @@
 #include "./Vector.hpp"
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
+#include "./Math.hpp"
 
 float Vector2f::magnitude() const {
     return std::sqrt((this->x * this->x) + (this->y * this->y));
@@ -15,7 +16,8 @@ void Vector2f::setWithCappedMagnitude(const Vector2f &new_vector, float max_magn
     // Cap the magnitude of the vector
     if (new_vector.magnitude() > max_magnitude)
         // Set the vector to new_vector, normalising its magnitude then multiplying by the maximum magnitude
-        this->set((max_magnitude / new_vector.magnitude()) * new_vector);
+        this->set((max_magnitude * Math::Q_rsqrt((new_vector.x * new_vector.x) + (new_vector.y * new_vector.y)) * new_vector));
+
     // Set the vector to the new vector - no need to modify magnitude less than max
     else
         this->set(new_vector);
