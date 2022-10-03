@@ -2,7 +2,7 @@
 #define __MATH_H__
 class Math {
   public:
-    static float Q_rsqrt( float number );
+    static float Q_rsqrt(float number);
 };
 
 #endif // __MATH_H__

@@ -16,7 +16,10 @@ void Vector2f::setWithCappedMagnitude(const Vector2f &new_vector, float max_magn
     // Cap the magnitude of the vector
     if (new_vector.magnitude() > max_magnitude)
         // Set the vector to new_vector, normalising its magnitude then multiplying by the maximum magnitude
-        this->set((max_magnitude * Math::Q_rsqrt((new_vector.x * new_vector.x) + (new_vector.y * new_vector.y)) * new_vector));
+        this->set((max_magnitude *
+                   Math::Q_rsqrt((new_vector.x * new_vector.x) + (new_vector.y * new_vector.y)) *
+                   new_vector));
+
 
     // Set the vector to the new vector - no need to modify magnitude less than max
     else
