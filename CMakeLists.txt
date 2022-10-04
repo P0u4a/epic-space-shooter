@@ -38,7 +38,7 @@ set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS src/*.cpp src/*.hpp)
 
-if(CMAKE_BUILD_TYPE MATCHES "Release")
+if(ENABLE_LINT)
     message("Linting enabled")
     find_program(IWYU_PATH NAMES include-what-you-use iwyu REQUIRED)
     find_program(PYTHON_PATH NAMES python python3 REQUIRED)
