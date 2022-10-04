@@ -6,7 +6,8 @@
 /**
  * @brief 2-dimensional vector with x and y componenets as floats
  */
-class Vector2f : public sf::Vector2f {
+class Vector2f : public sf::Vector2f
+{
   public:
     Vector2f() : sf::Vector2f(0, 0){};
     Vector2f(float x, float y) : sf::Vector2f(x, y){};

@@ -3,7 +3,8 @@
 
 #include "./Spaceship.hpp"
 
-class Enemy : public Spaceship {
+class Enemy : public Spaceship 
+{
   private:
     float _health;
 
