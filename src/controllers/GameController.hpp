@@ -9,15 +9,15 @@
 class GameController : public Updatable
 {
   private:
-    // Player player;
+    Player player;
     std::vector<Enemy> enemies;
     std::vector<Updatable> updatables;
-    // bool isPaused;
-    // PauseOverlay pauseOverlay;
+    bool isPaused;
+
   public:
-    // need to implement updatable function
-    // bool getPaused();
-    // void setPaused(bool paused);
+    bool getPaused() const;
+    void setPaused(bool paused);
+    // Need to implement updatable function
     void update();
 };
 
