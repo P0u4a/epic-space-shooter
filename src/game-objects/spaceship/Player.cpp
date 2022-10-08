@@ -10,3 +10,7 @@ bool Player::removeLives(int lives_to_remove)
     this->_lives -= lives_to_remove;
     return this->_lives > 0;
 }
+
+void update() {
+    
+}

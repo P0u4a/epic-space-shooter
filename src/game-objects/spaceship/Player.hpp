@@ -22,6 +22,8 @@ class Player : public Spaceship
      * @returns If the player is alive (true) or not (false)
      */
     bool removeLives(int lives_to_remove);
+
+    void update();
 };
 
 #endif // SRC_GAME_OBJECTS_SPACESHIP_PLAYER_HPP
