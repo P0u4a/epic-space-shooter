@@ -2,5 +2,10 @@
 
 bool GameController::getPaused() const 
 {
-    return isPaused;
+    return this->_isPaused;
+}
+
+void GameController::setPaused(bool paused) 
+{
+    this->_isPaused = paused;
 }

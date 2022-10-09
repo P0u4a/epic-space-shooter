@@ -9,10 +9,10 @@
 class GameController : public Updatable
 {
   private:
-    Player player;
-    std::vector<Enemy> enemies;
-    std::vector<Updatable> updatables;
-    bool isPaused;
+    Player _player;
+    std::vector<Enemy> _enemies;
+    std::vector<Updatable> _updatables;
+    bool _isPaused;
 
   public:
     bool getPaused() const;
