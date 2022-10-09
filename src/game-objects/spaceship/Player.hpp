@@ -2,15 +2,19 @@
 #define SRC_GAME_OBJECTS_SPACESHIP_PLAYER_HPP
 
 #include "./Spaceship.hpp"
+#include <SFML/Graphics.hpp>
 
-class Player : public Spaceship {
+class Player : public Spaceship
+{
   private:
     int _lives;
+    // I don't know if we want to draw the player like this or not
+    // sf::CircleShape *_asset;
 
   public:
     Player() = delete;
-    Player(float max_speed, float max_acceleration, float drag, int lives) :
-        Spaceship(max_speed, max_acceleration, drag), _lives(lives){};
+    Player(float max_speed, float max_acceleration, float drag, int lives)
+        : Spaceship(max_speed, max_acceleration, drag), _lives(lives){};
 
     int getLives() const;
 
@@ -21,6 +25,8 @@ class Player : public Spaceship {
      * @returns If the player is alive (true) or not (false)
      */
     bool removeLives(int lives_to_remove);
+
+    void update();
 };
 
 #endif // SRC_GAME_OBJECTS_SPACESHIP_PLAYER_HPP

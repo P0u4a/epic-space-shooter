@@ -3,7 +3,8 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-class Updatable : public sf::Sprite {
+class Updatable : public sf::Sprite
+{
   public:
     virtual void update() = 0;
 };
