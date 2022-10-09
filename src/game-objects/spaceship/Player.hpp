@@ -2,11 +2,14 @@
 #define SRC_GAME_OBJECTS_SPACESHIP_PLAYER_HPP
 
 #include "./Spaceship.hpp"
+#include <SFML/Graphics.hpp>
 
 class Player : public Spaceship
 {
   private:
     int _lives;
+    // I don't know if we want to draw the player like this or not
+    // sf::CircleShape *_asset;
 
   public:
     Player() = delete;
