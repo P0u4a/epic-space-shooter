@@ -1,7 +1,9 @@
 #include "./GameController.hpp"
 #include "game-objects/spaceship/Player.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 
-GameController::GameController() : _player(Player(1.0, 1.0, 1.0, 3)), _isPaused(false)
+GameController::GameController(sf::RenderWindow &window)
+    : _window(window), _player(Player(window, 1.0, 1.0, 1.0, 3)), _isPaused(false)
 {
 }
 

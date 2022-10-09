@@ -4,6 +4,7 @@
 #include "./Spaceship.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 class Player : public Spaceship
 {
@@ -14,8 +15,7 @@ class Player : public Spaceship
     // sf::CircleShape *_asset;
 
   public:
-    Player(float max_speed, float max_acceleration, float drag, int lives)
-        : Spaceship(max_speed, max_acceleration, drag), _lives(lives), _triangle(80, 3){};
+    Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives);
 
     int getLives() const;
 

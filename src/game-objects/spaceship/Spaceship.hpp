@@ -3,6 +3,7 @@
 
 #include "game-objects/abstract/GameObject.hpp"
 #include "util/Vector.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 
 class Spaceship : public GameObject
 {
@@ -11,8 +12,8 @@ class Spaceship : public GameObject
     float max_acceleration;
 
   public:
-    Spaceship(float max_speed, float max_acceleration, float drag)
-        : GameObject(drag), max_speed(max_speed), max_acceleration(max_acceleration){};
+    Spaceship(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag)
+        : GameObject(window, drag), max_speed(max_speed), max_acceleration(max_acceleration){};
 
     void setVelocity(const Vector2f &new_velocity) override;
     void setAcceleration(const Vector2f &new_acceleration) override;

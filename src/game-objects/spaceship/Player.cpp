@@ -1,4 +1,14 @@
 #include "Player.hpp"
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+
+Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives)
+    : Spaceship(window, max_speed, max_acceleration, drag), _lives(lives), _triangle(80, 3)
+{
+
+    this->_triangle.setFillColor(sf::Color::Green);
+    this->_triangle.setPosition(0, 0);
+};
 
 int Player::getLives() const
 {
@@ -28,4 +38,7 @@ void Player::update()
     // {
     //     // This should only accelerate the sprite towards the direction its pointing
     // }
+
+    // Draw player to screen
+    window.draw(this->_triangle);
 }
