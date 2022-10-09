@@ -18,7 +18,7 @@ class GameController : public Updatable
     bool getPaused() const;
     void setPaused(bool paused);
     // Need to implement updatable function
-    void update();
+    void update() override;
 };
 
 #endif // SRC_CONTROLLERS_GAMECONTROLLER_HPP

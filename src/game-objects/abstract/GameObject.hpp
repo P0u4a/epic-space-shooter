@@ -4,7 +4,8 @@
 #include "interfaces/Updatable.hpp"
 #include "util/Vector.hpp"
 
-class GameObject : public Updatable {
+class GameObject : public Updatable
+{
   protected:
     Vector2f velocity;
     Vector2f acceleration;

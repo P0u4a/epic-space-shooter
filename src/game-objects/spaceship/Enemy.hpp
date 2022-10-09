@@ -3,15 +3,15 @@
 
 #include "./Spaceship.hpp"
 
-class Enemy : public Spaceship 
+class Enemy : public Spaceship
 {
   private:
     float _health;
 
   public:
     Enemy() = delete;
-    Enemy(float max_speed, float max_acceleration, float drag, float health) :
-        Spaceship(max_speed, max_acceleration, drag), _health(health){};
+    Enemy(float max_speed, float max_acceleration, float drag, float health)
+        : Spaceship(max_speed, max_acceleration, drag), _health(health){};
 
     float getHealth() const;
 
