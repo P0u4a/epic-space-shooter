@@ -3,18 +3,19 @@
 
 #include "./Spaceship.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
 
 class Player : public Spaceship
 {
   private:
     int _lives;
+    sf::CircleShape _triangle;
     // I don't know if we want to draw the player like this or not
     // sf::CircleShape *_asset;
 
   public:
-    Player() = delete;
     Player(float max_speed, float max_acceleration, float drag, int lives)
-        : Spaceship(max_speed, max_acceleration, drag), _lives(lives){};
+        : Spaceship(max_speed, max_acceleration, drag), _lives(lives), _triangle(80, 3){};
 
     int getLives() const;
 

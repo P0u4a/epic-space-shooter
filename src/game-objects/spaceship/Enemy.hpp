@@ -9,7 +9,6 @@ class Enemy : public Spaceship
     float _health;
 
   public:
-    Enemy() = delete;
     Enemy(float max_speed, float max_acceleration, float drag, float health)
         : Spaceship(max_speed, max_acceleration, drag), _health(health){};
 
@@ -22,6 +21,8 @@ class Enemy : public Spaceship
      * @returns If the enemy is alive (true) or not (false)
      */
     bool removeHealth(float health_to_remove);
+
+    void update() override;
 };
 
 #endif // SRC_GAME_OBJECTS_SPACESHIP_ENEMY_HPP

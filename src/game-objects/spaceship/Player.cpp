@@ -12,7 +12,7 @@ bool Player::removeLives(int lives_to_remove)
 }
 
 // Uncomment this stuff when we figure out player sprite
-void update()
+void Player::update()
 {
     // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     // {

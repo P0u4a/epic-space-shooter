@@ -15,6 +15,7 @@ class GameController : public Updatable
     bool _isPaused;
 
   public:
+    GameController();
     bool getPaused() const;
     void setPaused(bool paused);
     // Need to implement updatable function

@@ -10,3 +10,7 @@ bool Enemy::removeHealth(float health_to_remove)
     this->_health -= health_to_remove;
     return this->_health > 0;
 }
+
+void Enemy::update()
+{
+}

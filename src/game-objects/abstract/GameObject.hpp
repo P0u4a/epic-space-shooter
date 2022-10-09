@@ -12,7 +12,6 @@ class GameObject : public Updatable
     float drag;
 
   public:
-    GameObject() = delete;
     explicit GameObject(float drag) : velocity({0, 0}), acceleration({0, 0}), drag(drag){};
 
     virtual Vector2f getVelocity() const;

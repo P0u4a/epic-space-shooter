@@ -12,9 +12,10 @@ class App
     bool _isInGame;
 
   public:
+    App();
     bool getIsInGame() const;
     void setIsInGame(bool in_game);
-    void beginGameLoop();
+    int beginGameLoop();
 };
 
 #endif // SRC_CONTROLLERS_APP_HPP

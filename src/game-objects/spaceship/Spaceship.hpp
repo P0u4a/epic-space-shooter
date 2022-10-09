@@ -11,7 +11,6 @@ class Spaceship : public GameObject
     float max_acceleration;
 
   public:
-    Spaceship() = delete;
     Spaceship(float max_speed, float max_acceleration, float drag)
         : GameObject(drag), max_speed(max_speed), max_acceleration(max_acceleration){};
 
