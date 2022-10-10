@@ -23,10 +23,10 @@ void Player::update(float delta_time)
 {
     // Rotate player anticlockwise
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        this->sprite.rotate(-0.1);
+        this->sprite.rotate(-kRotateSpeed * delta_time);
     // Rotate player clockwise
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        this->sprite.rotate(0.1);
+        this->sprite.rotate(kRotateSpeed * delta_time);
 
     // Reset acceleration for this tick
     this->setAcceleration({0, 0});

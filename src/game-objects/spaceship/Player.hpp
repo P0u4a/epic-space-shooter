@@ -8,6 +8,7 @@
 class Player : public Spaceship
 {
   private:
+    const float kRotateSpeed = 400;
     int _lives;
 
   public:
