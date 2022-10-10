@@ -6,7 +6,7 @@
 class Updatable : public sf::Sprite
 {
   public:
-    virtual void update() = 0;
+    virtual void update(float delta_time) = 0;
 };
 
 #endif // SRC_INTERFACES_UPDATABLE_HPP

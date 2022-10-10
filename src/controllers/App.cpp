@@ -26,6 +26,9 @@ int App::beginGameLoop()
     // Run main game loop as long as the window is open
     while (this->_window.isOpen())
     {
+        // Get elapsed time since last frame
+        auto time = this->_clock.getElapsedTime();
+        this->_clock.restart();
         // Check all window events triggered since the last iteration
         sf::Event event{};
         while (this->_window.pollEvent(event))
@@ -39,7 +42,7 @@ int App::beginGameLoop()
 
         // Run next game tick if in game
         if (this->_isInGame)
-            this->_gameController.update();
+            this->_gameController.update(time.asSeconds());
 
         // Display the current frame
         this->_window.display();

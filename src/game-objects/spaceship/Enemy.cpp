@@ -11,6 +11,6 @@ bool Enemy::removeHealth(float health_to_remove)
     return this->_health > 0;
 }
 
-void Enemy::update()
+void Enemy::update(float delta_time)
 {
 }

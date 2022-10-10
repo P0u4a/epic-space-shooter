@@ -24,7 +24,7 @@ class Player : public Spaceship
      */
     bool removeLives(int lives_to_remove);
 
-    void update() override;
+    void update(float delta_time) override;
 };
 
 #endif // SRC_GAME_OBJECTS_SPACESHIP_PLAYER_HPP

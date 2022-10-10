@@ -7,6 +7,11 @@ float Vector2f::magnitude() const
     return std::sqrt((this->x * this->x) + (this->y * this->y));
 }
 
+Vector2f Vector2f::norm() const
+{
+    return (1 / this->magnitude()) * Vector2f(this->x, this->y);
+}
+
 void Vector2f::set(const Vector2f &new_vector)
 {
     this->x = new_vector.x;
@@ -18,7 +23,7 @@ void Vector2f::setWithCappedMagnitude(const Vector2f &new_vector, float max_magn
     // Cap the magnitude of the vector
     if (new_vector.magnitude() > max_magnitude)
         // Set the vector to new_vector, normalising its magnitude then multiplying by the maximum magnitude
-        this->set((max_magnitude / new_vector.magnitude()) * new_vector);
+        this->set(new_vector.norm() * max_magnitude);
     // Set the vector to the new vector - no need to modify magnitude less than max
     else
         this->set(new_vector);
@@ -32,4 +37,9 @@ Vector2f operator*(const Vector2f &left, float right)
 Vector2f operator*(float left, const Vector2f &right)
 {
     return {right.x * left, right.y * left};
+}
+
+Vector2f operator+(const Vector2f &left, const Vector2f &right)
+{
+    return {left.x + right.x, left.y + right.y};
 }

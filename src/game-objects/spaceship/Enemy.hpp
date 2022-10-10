@@ -23,7 +23,7 @@ class Enemy : public Spaceship
      */
     bool removeHealth(float health_to_remove);
 
-    void update() override;
+    void update(float delta_time) override;
 };
 
 #endif // SRC_GAME_OBJECTS_SPACESHIP_ENEMY_HPP
