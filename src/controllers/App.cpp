@@ -6,6 +6,7 @@
 
 App::App() : _gameController(_window), _isInGame(false)
 {
+    this->_window.setVerticalSyncEnabled(true);
 }
 
 bool App::getIsInGame() const
@@ -38,7 +39,7 @@ int App::beginGameLoop()
                 this->_window.close();
         }
         // Clear previous frames
-        this->_window.clear(sf::Color::Red);
+        this->_window.clear(sf::Color::Black);
 
         // Run next game tick if in game
         if (this->_isInGame)
