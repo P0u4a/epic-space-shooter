@@ -7,7 +7,6 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <cmath>
-#include <iostream>
 
 int Player::getLives() const
 {
@@ -36,7 +35,7 @@ void Player::update(float delta_time)
     {
         // Get rotation in radians
         auto theta = static_cast<float>((this->sprite.getRotation() * M_PI / 180) - M_PI_2);
-        this->setAcceleration(Vector2f(std::cos(theta), std::sin(theta)) * 1000);
+        this->setAcceleration(Vector2f(std::cos(theta), std::sin(theta)) * max_acceleration);
     }
 
     // Draw player to screen
@@ -66,4 +65,26 @@ void Player::update(float delta_time)
         // Apply the drag vector as deceleration to the velocity
         this->velocity -= drag_vec * delta_time;
     }
+
+    // Wrap player around to opposite edge of screen if exited on one edge
+    auto [window_w, window_h] = static_cast<sf::Vector2f>(window.getSize());
+    auto [player_x, player_y] = this->sprite.getPosition();
+    auto bounding_rect = this->sprite.getGlobalBounds();
+    auto player_w = bounding_rect.width;
+    auto player_h = bounding_rect.height;
+    // Origin set at centre, so use half player_w / player_h in calculations
+    // Add some offset to push player further into screen to prevent being stuck outside in corners
+    const float push_offset = 0.1;
+    // Exited right edge
+    if (bounding_rect.left > window_w)
+        this->sprite.setPosition(push_offset - (player_w / 2), player_y);
+    // Exited left edge
+    else if (bounding_rect.left + player_w < 0)
+        this->sprite.setPosition(window_w + (player_w / 2) - push_offset, player_y);
+    // Exited bottom edge - y-axis points down
+    if (bounding_rect.top > window_h)
+        this->sprite.setPosition(player_x, push_offset - (player_w / 2));
+    // Exited top edge - y-axis points down
+    else if (bounding_rect.top + player_h < 0)
+        this->sprite.setPosition(player_x, window_h + (player_h / 2) - push_offset);
 }
