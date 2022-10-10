@@ -38,17 +38,6 @@ void Player::update(float delta_time)
         this->setAcceleration(Vector2f(std::cos(theta), std::sin(theta)) * max_acceleration);
     }
 
-    // Draw player to screen
-    window.draw(this->sprite);
-    // TODO remove debug
-    // Draw direction line to screen
-    auto a = sf::RectangleShape(Vector2f(30, 5));
-    a.setFillColor(sf::Color::Blue);
-    a.setOrigin(15, 2.5);
-    a.setPosition(this->sprite.getPosition());
-    a.setRotation(this->sprite.getRotation() - 90);
-    window.draw(a);
-
     // Run common spaceship update tick
     Spaceship::update(delta_time);
 
@@ -87,4 +76,15 @@ void Player::update(float delta_time)
     // Exited top edge - y-axis points down
     else if (bounding_rect.top + player_h < 0)
         this->sprite.setPosition(player_x, window_h + (player_h / 2) - push_offset);
+
+    // Draw player to screen
+    window.draw(this->sprite);
+    // TODO remove debug
+    // Draw direction line to screen
+    auto a = sf::RectangleShape(Vector2f(30, 5));
+    a.setFillColor(sf::Color::Blue);
+    a.setOrigin(15, 2.5);
+    a.setPosition(this->sprite.getPosition());
+    a.setRotation(this->sprite.getRotation() - 90);
+    window.draw(a);
 }
