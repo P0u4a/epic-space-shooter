@@ -3,16 +3,19 @@
 
 #include "interfaces/Updatable.hpp"
 #include "util/Vector.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 
-class GameObject : public Updatable {
+class GameObject : public Updatable
+{
   protected:
+    sf::RenderWindow &window;
     Vector2f velocity;
     Vector2f acceleration;
     float drag;
 
   public:
-    GameObject() = delete;
-    explicit GameObject(float drag) : velocity({0, 0}), acceleration({0, 0}), drag(drag){};
+    explicit GameObject(sf::RenderWindow &window, float drag)
+        : window(window), velocity({0, 0}), acceleration({0, 0}), drag(drag){};
 
     virtual Vector2f getVelocity() const;
     virtual void setVelocity(const Vector2f &new_velocity) = 0;

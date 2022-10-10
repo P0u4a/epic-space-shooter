@@ -20,6 +20,20 @@ class Vector2f : public sf::Vector2f
     [[nodiscard]] float magnitude() const;
 
     /**
+     * @brief Normalise a vector
+     *
+     * @return The normalised vector
+     */
+    [[nodiscard]] Vector2f norm() const;
+
+    /**
+     * @brief Get the absolute value of a vector
+     *
+     * @return The vector with the absolute value of all components
+     */
+    [[nodiscard]] Vector2f abs() const;
+
+    /**
      * @brief Set the vector to a new vector
      *
      * @param new_vector The new vector to set to this vector
@@ -38,5 +52,7 @@ class Vector2f : public sf::Vector2f
 
 Vector2f operator*(const Vector2f &left, float right);
 Vector2f operator*(float left, const Vector2f &right);
+
+Vector2f operator+(const Vector2f &left, const Vector2f &right);
 
 #endif // SRC_UTIL_VECTOR_HPP

@@ -3,18 +3,16 @@
 
 #include "./Spaceship.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 class Player : public Spaceship
 {
   private:
     int _lives;
-    // I don't know if we want to draw the player like this or not
-    // sf::CircleShape *_asset;
 
   public:
-    Player() = delete;
-    Player(float max_speed, float max_acceleration, float drag, int lives)
-        : Spaceship(max_speed, max_acceleration, drag), _lives(lives){};
+    Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives)
+        : Spaceship(window, max_speed, max_acceleration, drag, 80), _lives(lives){};
 
     int getLives() const;
 
@@ -26,7 +24,7 @@ class Player : public Spaceship
      */
     bool removeLives(int lives_to_remove);
 
-    void update();
+    void update(float delta_time) override;
 };
 
 #endif // SRC_GAME_OBJECTS_SPACESHIP_PLAYER_HPP
