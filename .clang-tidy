@@ -71,5 +71,7 @@ CheckOptions:
     value: UPPER_CASE
   - key: readability-identifier-naming.PrivateMemberPrefix
     value: _
+  - key: cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+    value: true
 FormatStyle: "file"
 WarningsAsErrors: "*"

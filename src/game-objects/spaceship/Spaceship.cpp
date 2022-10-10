@@ -4,7 +4,6 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <algorithm>
-#include <cstdlib>
 #include <iostream>
 #include <string>
 
@@ -16,14 +15,14 @@ Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_accele
     if (!this->texture.loadFromFile("assets/" + sprite_file))
         // Error while loading texture - exit program
         exit(1); // NOLINT(concurrency-mt-unsafe)
-    this->setTexture(this->texture);
+    this->sprite.setTexture(this->texture);
     // TODO remove debug
     this->hitbox.setFillColor(sf::Color::Green);
     // Set initial sprite position
-    sf::Sprite::setPosition(init_pos);
+    this->sprite.setPosition(init_pos);
     this->hitbox.setPosition(init_pos);
     // Apply custom x and y scaling to sprite
-    this->setScale(scale);
+    this->sprite.setScale(scale);
     this->hitbox.setScale(scale * 10.0F);
     // Set hitbox transform origin to centre of spaceship for rotation etc.
     float x_vert_sum = 0;
@@ -35,7 +34,8 @@ Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_accele
     }
     // Triangle centroid is the average x / y coordinates of the vertices
     this->hitbox.setOrigin(x_vert_sum / 3, y_vert_sum / 3);
-    this->setOrigin(static_cast<sf::Vector2f>(this->texture.getSize()) / 2.0F);
+    // Set sprite origin to centroid of texture
+    this->sprite.setOrigin(static_cast<sf::Vector2f>(this->texture.getSize()) / 2.0F);
 };
 
 void Spaceship::setVelocity(const Vector2f &new_velocity)
@@ -54,7 +54,7 @@ void Spaceship::update(float delta_time)
     this->setVelocity(this->velocity + (this->acceleration * delta_time));
     // Change position based on current velocity
     auto move_by = this->velocity * delta_time;
-    this->move(move_by);
+    this->sprite.move(move_by);
     this->hitbox.move(move_by);
 }
 
@@ -62,14 +62,14 @@ void Spaceship::rotate(float angle)
 {
     // Apply rotation to hitbox
     this->hitbox.rotate(angle);
-    // Apply rotation to self and texture
-    sf::Sprite::rotate(angle);
+    // Apply rotation to sprite
+    this->sprite.rotate(angle);
 }
 
 void Spaceship::setPosition(float x, float y)
 {
     // Apply position to hitbox
     this->hitbox.setPosition(x, y);
-    // Apply rotation to self and texture
-    sf::Sprite::setPosition(x, y);
+    // Apply rotation to sprite
+    this->sprite.setPosition(x, y);
 }

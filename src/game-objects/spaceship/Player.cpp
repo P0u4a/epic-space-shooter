@@ -35,7 +35,7 @@ void Player::update(float delta_time)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
         // Get rotation in radians
-        auto theta = static_cast<float>((this->getRotation() * M_PI / 180) - M_PI_2);
+        auto theta = static_cast<float>((this->hitbox.getRotation() * M_PI / 180) - M_PI_2);
         this->setAcceleration(Vector2f(std::cos(theta), std::sin(theta)) * max_acceleration);
     }
 
@@ -81,6 +81,6 @@ void Player::update(float delta_time)
     // Draw hitbox to screen
     // TODO remove debug
     window.draw(this->hitbox);
-    // Draw self - player to screen
-    window.draw(*this);
+    // Draw player to screen
+    window.draw(this->sprite);
 }

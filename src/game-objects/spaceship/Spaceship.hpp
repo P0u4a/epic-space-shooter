@@ -5,6 +5,7 @@
 #include "util/Vector.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <string>
 
@@ -14,6 +15,7 @@ class Spaceship : public GameObject
     float max_speed;
     float max_acceleration;
     sf::CircleShape hitbox;
+    sf::Sprite sprite;
     sf::Texture texture;
 
   public:
