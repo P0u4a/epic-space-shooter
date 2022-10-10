@@ -27,6 +27,13 @@ class Vector2f : public sf::Vector2f
     [[nodiscard]] Vector2f norm() const;
 
     /**
+     * @brief Get the absolute value of a vector
+     *
+     * @return The vector with the absolute value of all components
+     */
+    [[nodiscard]] Vector2f abs() const;
+
+    /**
      * @brief Set the vector to a new vector
      *
      * @param new_vector The new vector to set to this vector

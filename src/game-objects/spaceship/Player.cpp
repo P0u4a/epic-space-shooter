@@ -35,7 +35,7 @@ void Player::update(float delta_time)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
         // Get rotation in radians
-        auto theta = static_cast<float>(this->sprite.getRotation() * M_PI / 180);
+        auto theta = static_cast<float>((this->sprite.getRotation() * M_PI / 180) - M_PI_2);
         this->setAcceleration(Vector2f(std::cos(theta), std::sin(theta)) * 1000);
     }
 
@@ -47,9 +47,23 @@ void Player::update(float delta_time)
     a.setFillColor(sf::Color::Blue);
     a.setOrigin(15, 2.5);
     a.setPosition(this->sprite.getPosition());
-    a.setRotation(this->sprite.getRotation());
+    a.setRotation(this->sprite.getRotation() - 90);
     window.draw(a);
 
     // Run common spaceship update tick
     Spaceship::update(delta_time);
+
+    // No acceleration applied - apply drag
+    if (this->acceleration.x == 0 && this->acceleration.y == 0 && this->velocity.magnitude() > 0)
+    {
+        // Draw vector in the same direction as velocity proportional to the current speed
+        auto drag_vec = (this->velocity.norm() * (this->velocity.magnitude() / drag)).abs();
+        // All components of the velocity vector must be positive after subtracting drag
+        if (this->velocity.x < 0)
+            drag_vec.x = -drag_vec.x;
+        if (this->velocity.y < 0)
+            drag_vec.y = -drag_vec.y;
+        // Apply the drag vector as deceleration to the velocity
+        this->velocity -= drag_vec * delta_time;
+    }
 }

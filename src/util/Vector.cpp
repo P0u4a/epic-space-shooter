@@ -12,6 +12,11 @@ Vector2f Vector2f::norm() const
     return (1 / this->magnitude()) * Vector2f(this->x, this->y);
 }
 
+Vector2f Vector2f::abs() const
+{
+    return {std::abs(this->x), std::abs(this->y)};
+}
+
 void Vector2f::set(const Vector2f &new_vector)
 {
     this->x = new_vector.x;
