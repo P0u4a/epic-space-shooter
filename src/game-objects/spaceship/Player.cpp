@@ -1,14 +1,8 @@
 #include "Player.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-
-Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives)
-    : Spaceship(window, max_speed, max_acceleration, drag), _lives(lives), _triangle(80, 3)
-{
-
-    this->_triangle.setFillColor(sf::Color::Green);
-    this->_triangle.setPosition(0, 0);
-};
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 int Player::getLives() const
 {
@@ -21,18 +15,20 @@ bool Player::removeLives(int lives_to_remove)
     return this->_lives > 0;
 }
 
-// Uncomment this stuff when we figure out player sprite
 void Player::update()
 {
-    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    // {
-    //     // This should only rotate the sprite anticlockwise
-    // }
 
-    // else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    // {
-    //     // This should only rotate the sprite clockwise
-    // }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        // This should only rotate the sprite anticlockwise
+        this->sprite.rotate(-0.1);
+    }
+
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        // This should only rotate the sprite clockwise
+        this->sprite.rotate(0.1);
+    }
 
     // else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     // {
@@ -40,5 +36,5 @@ void Player::update()
     // }
 
     // Draw player to screen
-    window.draw(this->_triangle);
+    window.draw(this->sprite);
 }
