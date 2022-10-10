@@ -33,7 +33,7 @@ void Spaceship::setAcceleration(const Vector2f &new_acceleration)
 void Spaceship::update(float delta_time)
 {
     // Change velocity based on current acceleration
-    this->velocity += this->acceleration * delta_time;
+    this->setVelocity(this->velocity + (this->acceleration * delta_time));
     // Change position based on current velocity
     auto move_by = this->velocity * delta_time;
     this->move(move_by);
