@@ -15,7 +15,7 @@ class Spaceship : public GameObject
 
   public:
     Spaceship(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, float sprite_size,
-              float x_scale, float y_scale);
+              Vector2f scale, Vector2f init_pos);
 
     void setVelocity(const Vector2f &new_velocity) override;
     void setAcceleration(const Vector2f &new_acceleration) override;

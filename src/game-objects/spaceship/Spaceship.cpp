@@ -4,16 +4,16 @@
 #include <iostream>
 
 Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, float sprite_size,
-                     float x_scale, float y_scale)
+                     Vector2f scale, Vector2f init_pos)
     : GameObject(window, drag), max_speed(max_speed), max_acceleration(max_acceleration), sprite(sprite_size, 3)
 {
     // Set sprite colour
     this->sprite.setFillColor(sf::Color::Green);
     // Set initial sprite position
     // TODO
-    this->sprite.setPosition(300, 300);
+    this->sprite.setPosition(init_pos);
     // Apply custom x and y scaling to sprite
-    this->sprite.setScale(x_scale, y_scale);
+    this->sprite.setScale(scale);
     // Set transform origin to centre of spaceship for rotation etc.
     float x_vert_sum = 0;
     float y_vert_sum = 0;

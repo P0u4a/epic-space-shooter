@@ -2,6 +2,7 @@
 #define SRC_GAME_OBJECTS_SPACESHIP_PLAYER_HPP
 
 #include "./Spaceship.hpp"
+#include "util/Vector.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -13,8 +14,10 @@ class Player : public Spaceship
 
   public:
     Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, float size,
-           float x_scale, float y_scale)
-        : Spaceship(window, max_speed, max_acceleration, drag, size, x_scale, y_scale), _lives(lives){};
+           Vector2f scale)
+        : Spaceship(window, max_speed, max_acceleration, drag, size, scale,
+                    {static_cast<float>(window.getSize().x / 2.0), static_cast<float>(window.getSize().y / 2.0)}),
+          _lives(lives){};
 
     int getLives() const;
 
