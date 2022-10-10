@@ -11,10 +11,9 @@ class Enemy : public Spaceship
     float _health;
 
   public:
-    Enemy(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, float health, float size,
-          Vector2f scale)
+    Enemy(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, float health, Vector2f scale)
         // TODO
-        : Spaceship(window, max_speed, max_acceleration, drag, size, scale, {0, 0}), _health(health){};
+        : Spaceship(window, max_speed, max_acceleration, drag, scale, {0, 0}, ""), _health(health){};
 
     float getHealth() const;
 

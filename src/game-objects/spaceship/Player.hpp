@@ -13,10 +13,10 @@ class Player : public Spaceship
     int _lives;
 
   public:
-    Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, float size,
-           Vector2f scale)
-        : Spaceship(window, max_speed, max_acceleration, drag, size, scale,
-                    {static_cast<float>(window.getSize().x / 2.0), static_cast<float>(window.getSize().y / 2.0)}),
+    Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale)
+        : Spaceship(window, max_speed, max_acceleration, drag, scale,
+                    {static_cast<float>(window.getSize().x / 2.0), static_cast<float>(window.getSize().y / 2.0)},
+                    "player-sprite.png"),
           _lives(lives){};
 
     int getLives() const;
