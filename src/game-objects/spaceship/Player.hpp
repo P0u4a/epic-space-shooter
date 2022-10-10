@@ -11,8 +11,9 @@ class Player : public Spaceship
     int _lives;
 
   public:
-    Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives)
-        : Spaceship(window, max_speed, max_acceleration, drag, 80), _lives(lives){};
+    Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, float size,
+           float x_scale, float y_scale)
+        : Spaceship(window, max_speed, max_acceleration, drag, size, x_scale, y_scale), _lives(lives){};
 
     int getLives() const;
 
