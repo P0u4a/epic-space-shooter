@@ -16,7 +16,6 @@ class Player : public Spaceship
     std::vector<sf::Texture> _flames_textures;
     sf::Sprite _flames_sprite;
     int _curr_flames_tex_i = 0;
-    int _curr_flames_tex_n = 0;
     int _lives;
 
   public:

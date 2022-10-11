@@ -77,16 +77,11 @@ void Player::update(float delta_time)
         auto theta = static_cast<float>((this->hitbox.getRotation() * M_PI / 180) - M_PI_2);
         this->setAcceleration(Vector2f(std::cos(theta), std::sin(theta)) * max_acceleration);
         // Display flames sprite this frame
-        this->_flames_sprite.setTexture(this->_flames_textures[this->_curr_flames_tex_i]);
+        this->_flames_sprite.setTexture(this->_flames_textures[std::floor(this->_curr_flames_tex_i / 2)]);
         // Set new flames sprite texture index - use same texture for 2 frames
-        if (this->_curr_flames_tex_n >= 1)
-        {
-            this->_curr_flames_tex_i++;
-            if (this->_curr_flames_tex_i >= static_cast<int>(this->_flames_textures.size()))
-                this->_curr_flames_tex_i = 0;
-            this->_curr_flames_tex_n = -1;
-        }
-        this->_curr_flames_tex_n++;
+        this->_curr_flames_tex_i++;
+        if (this->_curr_flames_tex_i >= static_cast<int>(this->_flames_textures.size()) * 2)
+            this->_curr_flames_tex_i = 0;
     }
 
     // Run common spaceship update tick
@@ -128,8 +123,7 @@ void Player::update(float delta_time)
         this->setPosition(player_x, window_h + (player_h / 2) - push_offset);
 
     // Draw hitbox to screen
-    // TODO remove debug
-    // window.draw(this->hitbox);
+    window.draw(this->hitbox);
     // Draw player to screen
     window.draw(this->sprite);
 }
