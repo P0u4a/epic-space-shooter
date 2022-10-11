@@ -1,4 +1,5 @@
 #include "./Spaceship.hpp"
+#include "util/FileSystem.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -12,7 +13,7 @@ Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_accele
     : GameObject(window, drag), max_speed(max_speed), max_acceleration(max_acceleration), hitbox(1, 3)
 {
     // Load texture and set as sprite texture
-    if (!this->texture.loadFromFile("assets/" + sprite_file))
+    if (!this->texture.loadFromFile(FileSystem::getExecutablePath() + "assets/" + sprite_file))
         // Error while loading texture - exit program
         exit(1); // NOLINT(concurrency-mt-unsafe)
     this->sprite.setTexture(this->texture);
