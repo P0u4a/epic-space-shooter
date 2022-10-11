@@ -8,6 +8,29 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <cmath>
+#include <string>
+
+Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale)
+    : Spaceship(window, max_speed, max_acceleration, drag, scale,
+                {static_cast<float>(window.getSize().x / 2.0), static_cast<float>(window.getSize().y / 2.0)},
+                "player-sprite.png"),
+      _lives(lives)
+{
+    this->_flames_textures.resize(4);
+    // Load flames textures
+    for (int i = 0; i < 4; i++)
+    {
+        if (!this->_flames_textures[i].loadFromFile("assets/player-flames-sprite-" + std::to_string(i) + ".png"))
+            // Error while loading texture - exit program
+            exit(1); // NOLINT(concurrency-mt-unsafe)
+    }
+    // this->_flames_sprite.setTexture(this->_flames_texture);
+    // Set initial flames sprite position and scaling
+    this->_flames_sprite.setPosition(this->sprite.getPosition());
+    this->_flames_sprite.setScale(scale);
+    // Set flames sprite origin to spaceship centroid
+    this->_flames_sprite.setOrigin(static_cast<sf::Vector2f>(this->_flames_textures[0].getSize()) / 2.0F);
+};
 
 int Player::getLives() const
 {
@@ -18,6 +41,22 @@ bool Player::removeLives(int lives_to_remove)
 {
     this->_lives -= lives_to_remove;
     return this->_lives > 0;
+}
+
+void Player::rotate(float angle)
+{
+    // Run parent rotation logic
+    Spaceship::rotate(angle);
+    // Rotate flames sprite
+    this->_flames_sprite.rotate(angle);
+}
+
+void Player::setPosition(float x, float y)
+{
+    // Run parent set position logic
+    Spaceship::setPosition(x, y);
+    // Set new flames sprite position
+    this->_flames_sprite.setPosition(x, y);
 }
 
 void Player::update(float delta_time)
@@ -37,21 +76,31 @@ void Player::update(float delta_time)
         // Get rotation in radians
         auto theta = static_cast<float>((this->hitbox.getRotation() * M_PI / 180) - M_PI_2);
         this->setAcceleration(Vector2f(std::cos(theta), std::sin(theta)) * max_acceleration);
+        // Display flames sprite this frame
+        this->_flames_sprite.setTexture(this->_flames_textures[this->_curr_flames_tex_i]);
+        // Set new flames sprite texture index - use same texture for 2 frames
+        if (this->_curr_flames_tex_n >= 1)
+        {
+            this->_curr_flames_tex_i++;
+            if (this->_curr_flames_tex_i >= static_cast<int>(this->_flames_textures.size()))
+                this->_curr_flames_tex_i = 0;
+            this->_curr_flames_tex_n = -1;
+        }
+        this->_curr_flames_tex_n++;
     }
 
     // Run common spaceship update tick
     Spaceship::update(delta_time);
+    // Update flames position
+    this->_flames_sprite.move(this->velocity * delta_time);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        window.draw(this->_flames_sprite);
 
     // No acceleration applied - apply drag
     if (this->acceleration.x == 0 && this->acceleration.y == 0 && this->velocity.magnitude() > 0)
     {
         // Draw vector in the same direction as velocity proportional to the current speed
-        auto drag_vec = (this->velocity.norm() * (this->velocity.magnitude() / drag)).abs();
-        // All components of the velocity vector must be positive after subtracting drag
-        if (this->velocity.x < 0)
-            drag_vec.x = -drag_vec.x;
-        if (this->velocity.y < 0)
-            drag_vec.y = -drag_vec.y;
+        auto drag_vec = this->velocity.norm() * (this->velocity.magnitude() / drag);
         // Apply the drag vector as deceleration to the velocity
         this->velocity -= drag_vec * delta_time;
     }
@@ -80,7 +129,7 @@ void Player::update(float delta_time)
 
     // Draw hitbox to screen
     // TODO remove debug
-    window.draw(this->hitbox);
+    // window.draw(this->hitbox);
     // Draw player to screen
     window.draw(this->sprite);
 }
