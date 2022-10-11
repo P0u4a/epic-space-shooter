@@ -1,8 +1,11 @@
 #include "FileSystem.hpp"
 #include <filesystem>
-#include <mach-o/dyld.h>
 #include <string>
 #include <whereami.h>
+
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#endif
 
 std::string FileSystem::getExecutablePath()
 {
