@@ -22,10 +22,12 @@ jobs:
           libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev \
           libxcb-shape0-dev libxcb-sync-dev libxcb-xfixes0-dev libxss-dev \
           libxcb-xinerama0-dev libxcb-dri3-dev libxcb-util0-dev libxcb-util-dev
-      - name: install-conan
+      - name: setup-conan
         run: |
           pip install conan
           conan profile new default --detect
+          conan profile update settings.compiler.libcxx=libstdc++11 default
+          conan profile update settings.cppstd=17 default
       - name: install-dependencies
         run: |
           mkdir build

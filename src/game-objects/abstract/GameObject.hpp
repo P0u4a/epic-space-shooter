@@ -17,9 +17,9 @@ class GameObject : public Updatable
     explicit GameObject(sf::RenderWindow &window, float drag)
         : window(window), velocity({0, 0}), acceleration({0, 0}), drag(drag){};
 
-    virtual Vector2f getVelocity() const;
+    [[nodiscard]] virtual Vector2f getVelocity() const;
     virtual void setVelocity(const Vector2f &new_velocity) = 0;
-    virtual Vector2f getAcceleration() const;
+    [[nodiscard]] virtual Vector2f getAcceleration() const;
     virtual void setAcceleration(const Vector2f &new_acceleration) = 0;
 };
 

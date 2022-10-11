@@ -2,6 +2,7 @@
 #define SRC_GAME_OBJECTS_SPACESHIP_ENEMY_HPP
 
 #include "./Spaceship.hpp"
+#include "util/Vector.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 
 class Enemy : public Spaceship
@@ -10,8 +11,9 @@ class Enemy : public Spaceship
     float _health;
 
   public:
-    Enemy(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, float health)
-        : Spaceship(window, max_speed, max_acceleration, drag, 80), _health(health){};
+    Enemy(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, float health, Vector2f scale)
+        // TODO
+        : Spaceship(window, max_speed, max_acceleration, drag, scale, {0, 0}, ""), _health(health){};
 
     float getHealth() const;
 

@@ -9,7 +9,7 @@ float Vector2f::magnitude() const
 
 Vector2f Vector2f::norm() const
 {
-    return (1 / this->magnitude()) * Vector2f(this->x, this->y);
+    return (1 / this->magnitude()) * (*this);
 }
 
 Vector2f Vector2f::abs() const

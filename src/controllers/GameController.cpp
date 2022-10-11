@@ -3,7 +3,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 GameController::GameController(sf::RenderWindow &window)
-    : _window(window), _player(Player(window, 1000.0, 500.0, 1.0, 3)), _isPaused(false)
+    : _window(window), _player(Player(window, 1000.0, 500.0, 1, 3, {10, 10})), _isPaused(false)
 {
 }
 
