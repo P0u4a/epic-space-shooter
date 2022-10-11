@@ -66,7 +66,6 @@ conan_basic_setup()
 include_directories(${CMAKE_SOURCE_DIR}/inc/whereami)
 
 file(COPY assets DESTINATION bin)
-file(COPY src/shaders DESTINATION bin)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 target_include_directories(${PROJECT_NAME} PRIVATE src)
