@@ -3,8 +3,14 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 GameController::GameController(sf::RenderWindow &window)
-    : _window(window), _player(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10})), _isPaused(false)
+    : _window(window), _firstPlayer(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10},
+                                           {sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D})),
+      _secondPlayer(
+          Player(window, 1000.0, 500.0, 1.5, 3, {10, 10}, {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right})),
+      _isPaused(false)
 {
+    _firstPlayer.sprite.setColor(sf::Color::Red);
+    _secondPlayer.sprite.setColor(sf::Color::Blue);
 }
 
 bool GameController::getPaused() const
@@ -26,8 +32,10 @@ void GameController::update(float delta_time)
     if (this->_isPaused)
         return;
 
-    // Update player state
-    this->_player.update(delta_time);
+    // Update player states
+    this->_firstPlayer.update(delta_time);
+    this->_secondPlayer.update(delta_time);
+
     // Loop through all enemies and update their state
     for (auto &enemy : this->_enemies)
         enemy.update(delta_time);
