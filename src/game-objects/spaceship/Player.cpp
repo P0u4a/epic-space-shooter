@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include "game-objects/spaceship/Spaceship.hpp"
+#include "util/FileSystem.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -20,7 +21,8 @@ Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration
     // Load flames textures
     for (int i = 0; i < 4; i++)
     {
-        if (!this->_flames_textures[i].loadFromFile("assets/player-flames-sprite-" + std::to_string(i) + ".png"))
+        if (!this->_flames_textures[i].loadFromFile(FileSystem::getExecutablePath() + "assets/player-flames-sprite-" +
+                                                    std::to_string(i) + ".png"))
             // Error while loading texture - exit program
             exit(1); // NOLINT(concurrency-mt-unsafe)
     }
@@ -123,7 +125,7 @@ void Player::update(float delta_time)
         this->setPosition(player_x, window_h + (player_h / 2) - push_offset);
 
     // Draw hitbox to screen
-    window.draw(this->hitbox);
+    // window.draw(this->hitbox);
     // Draw player to screen
     window.draw(this->sprite);
 }

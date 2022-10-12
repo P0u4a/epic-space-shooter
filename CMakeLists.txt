@@ -63,6 +63,8 @@ add_compile_options(-Wall -Wextra -Wpedantic)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
+include_directories(${CMAKE_SOURCE_DIR}/inc/whereami)
+
 file(COPY assets DESTINATION bin)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

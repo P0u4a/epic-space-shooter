@@ -1,7 +1,10 @@
 #include "App.hpp"
 #include "controllers/GameController.hpp"
+#include "util/FileSystem.hpp"
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Glsl.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
 App::App() : _gameController(_window), _isInGame(false)
@@ -24,6 +27,18 @@ int App::beginGameLoop()
     // TODO debug, remove
     this->_isInGame = true;
 
+    // Add background
+    auto background = sf::RectangleShape(static_cast<sf::Vector2f>(this->_window.getSize()));
+    sf::Texture bg_texture;
+    if (!bg_texture.loadFromFile(FileSystem::getExecutablePath() + "assets/background.png"))
+        // Error while loading texture
+        return 1;
+    auto [window_w, window_h] = static_cast<sf::Vector2i>(this->_window.getSize());
+    bg_texture.setRepeated(true);
+    background.setTextureRect({0, 0, window_w, window_h});
+    background.setTexture(&bg_texture);
+    background.setScale({4, 4});
+
     // Run main game loop as long as the window is open
     while (this->_window.isOpen())
     {
@@ -40,6 +55,9 @@ int App::beginGameLoop()
         }
         // Clear previous frames
         this->_window.clear(sf::Color::Black);
+
+        // Draw background
+        this->_window.draw(background);
 
         // Run next game tick if in game
         if (this->_isInGame)
