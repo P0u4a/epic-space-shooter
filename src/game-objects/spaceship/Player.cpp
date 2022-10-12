@@ -11,11 +11,12 @@
 #include <cmath>
 #include <string>
 
-Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale)
+Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
+               moveKeys keys)
     : Spaceship(window, max_speed, max_acceleration, drag, scale,
                 {static_cast<float>(window.getSize().x / 2.0), static_cast<float>(window.getSize().y / 2.0)},
                 "player-sprite.png"),
-      _lives(lives)
+      _lives(lives), _keys({keys.moveUp, keys.rotateLeft, keys.rotateRight})
 {
     this->_flames_textures.resize(4);
     // Load flames textures
@@ -26,13 +27,12 @@ Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration
             // Error while loading texture - exit program
             exit(1); // NOLINT(concurrency-mt-unsafe)
     }
-    // this->_flames_sprite.setTexture(this->_flames_texture);
     // Set initial flames sprite position and scaling
     this->_flames_sprite.setPosition(this->sprite.getPosition());
     this->_flames_sprite.setScale(scale);
     // Set flames sprite origin to spaceship centroid
     this->_flames_sprite.setOrigin(static_cast<sf::Vector2f>(this->_flames_textures[0].getSize()) / 2.0F);
-};
+}
 
 int Player::getLives() const
 {
@@ -64,16 +64,16 @@ void Player::setPosition(float x, float y)
 void Player::update(float delta_time)
 {
     // Rotate player anticlockwise
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    if (sf::Keyboard::isKeyPressed(_keys.rotateLeft))
         this->rotate(-kRotateSpeed * delta_time);
     // Rotate player clockwise
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    else if (sf::Keyboard::isKeyPressed(_keys.rotateRight))
         this->rotate(kRotateSpeed * delta_time);
 
     // Reset acceleration for this tick
     this->setAcceleration({0, 0});
     // Add forward acceleration in direction being faced
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    if (sf::Keyboard::isKeyPressed(_keys.moveUp))
     {
         // Get rotation in radians
         auto theta = static_cast<float>((this->hitbox.getRotation() * M_PI / 180) - M_PI_2);
@@ -90,7 +90,7 @@ void Player::update(float delta_time)
     Spaceship::update(delta_time);
     // Update flames position
     this->_flames_sprite.move(this->velocity * delta_time);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    if (sf::Keyboard::isKeyPressed(_keys.moveUp))
         window.draw(this->_flames_sprite);
 
     // No acceleration applied - apply drag

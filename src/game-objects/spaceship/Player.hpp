@@ -17,9 +17,20 @@ class Player : public Spaceship
     sf::Sprite _flames_sprite;
     int _curr_flames_tex_i = 0;
     int _lives;
+    int _num;
+
+    struct moveKeys
+    {
+        // This works without using the enum keyword at the beginning i guess
+        sf::Keyboard::Key moveUp;
+        sf::Keyboard::Key rotateLeft;
+        sf::Keyboard::Key rotateRight;
+
+    } _keys;
 
   public:
-    Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale);
+    Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
+           moveKeys keys);
 
     int getLives() const;
 
