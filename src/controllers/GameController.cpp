@@ -9,8 +9,12 @@ GameController::GameController(sf::RenderWindow &window)
           Player(window, 1000.0, 500.0, 1.5, 3, {10, 10}, {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right})),
       _isPaused(false)
 {
+    // Configure player 1 position and colour
     _firstPlayer.sprite.setColor(sf::Color::Red);
-    _secondPlayer.sprite.setColor(sf::Color::Blue);
+    _firstPlayer.setPosition(300.0, 500.0);
+    // Configure player 2 position and colour
+    _secondPlayer.sprite.setColor(sf::Color::Green);
+    _secondPlayer.setPosition(1500, 500.0);
 }
 
 bool GameController::getPaused() const
