@@ -37,7 +37,7 @@ Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_accele
     this->hitbox.setOrigin(x_vert_sum / 3, y_vert_sum / 3);
     // Set sprite origin to centroid of texture
     this->sprite.setOrigin(static_cast<sf::Vector2f>(this->texture.getSize()) / 2.0F);
-};
+}
 
 void Spaceship::setVelocity(const Vector2f &new_velocity)
 {
@@ -73,4 +73,9 @@ void Spaceship::setPosition(float x, float y)
     this->hitbox.setPosition(x, y);
     // Apply rotation to sprite
     this->sprite.setPosition(x, y);
+}
+
+void Spaceship::setSprite(sf::Color color)
+{
+    sprite.setColor(color);
 }
