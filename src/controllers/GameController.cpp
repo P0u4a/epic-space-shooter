@@ -10,10 +10,10 @@ GameController::GameController(sf::RenderWindow &window)
       _isPaused(false)
 {
     // Configure player 1 position and colour
-    _firstPlayer.sprite.setColor(sf::Color::Red);
+    _firstPlayer.setSprite(sf::Color::Red);
     _firstPlayer.setPosition(300.0, 500.0);
     // Configure player 2 position and colour
-    _secondPlayer.sprite.setColor(sf::Color::Green);
+    _secondPlayer.setSprite(sf::Color::Green);
     _secondPlayer.setPosition(1500, 500.0);
 }
 

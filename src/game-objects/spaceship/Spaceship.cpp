@@ -74,3 +74,8 @@ void Spaceship::setPosition(float x, float y)
     // Apply rotation to sprite
     this->sprite.setPosition(x, y);
 }
+
+void Spaceship::setSprite(sf::Color color)
+{
+    sprite.setColor(color);
+}

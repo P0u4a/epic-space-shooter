@@ -15,12 +15,10 @@ class Spaceship : public GameObject
     float max_speed;
     float max_acceleration;
     sf::CircleShape hitbox;
-    // sf::Sprite sprite;
+    sf::Sprite sprite;
     sf::Texture texture;
 
   public:
-    // This needs to be public so GameController can change the sprite color in its constructor
-    sf::Sprite sprite;
     Spaceship(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, Vector2f scale,
               Vector2f init_pos, const std::string &sprite_file);
 
@@ -29,6 +27,7 @@ class Spaceship : public GameObject
     void update(float delta_time) override;
     virtual void rotate(float angle);
     virtual void setPosition(float x, float y);
+    void setSprite(sf::Color color);
 };
 
 #endif // SRC_GAME_OBJECTS_ABSTRACT_SPACESHIP_HPP
