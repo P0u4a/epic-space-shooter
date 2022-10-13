@@ -17,8 +17,7 @@ class Player : public Spaceship
     sf::Sprite _flames_sprite;
     int _curr_flames_tex_i = 0;
     int _lives;
-    int _num;
-
+    
     struct moveKeys
     {
         // This works without using the enum keyword at the beginning i guess

@@ -14,7 +14,7 @@
 Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
                moveKeys keys)
     : Spaceship(window, max_speed, max_acceleration, drag, scale,
-                {static_cast<float>(window.getSize().x / 2.0), static_cast<float>(window.getSize().y / 2.0)},
+                {0, 0},
                 "player-sprite.png"),
       _lives(lives), _keys({keys.moveUp, keys.rotateLeft, keys.rotateRight})
 {
