@@ -5,6 +5,8 @@
 GameController::GameController(sf::RenderWindow &window)
     : _window(window), _player(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10})), _isPaused(false)
 {
+    //store refrence to vector of projectile class for player to add to upon firing
+    _player.addProjVec(this->_projectiles);
 }
 
 bool GameController::getPaused() const
@@ -34,4 +36,7 @@ void GameController::update(float delta_time)
     // Loop through all remaining updateable objects and update their state
     for (auto &updateable : this->_updatables)
         updateable.update(delta_time);
+    // Loop through all bullets
+    for (auto &projectile : this->_projectiles)
+        projectile.update(delta_time);
 }

@@ -10,6 +10,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <cmath>
 #include <string>
+#include <vector>
 
 Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale)
     : Spaceship(window, max_speed, max_acceleration, drag, scale,
@@ -88,6 +89,12 @@ void Player::update(float delta_time)
 
     // Run common spaceship update tick
     Spaceship::update(delta_time);
+
+    //after spaceship moved to new position check for firing
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        this->_projectiles.emplace_back(this->window, this->drag, this->velocity, this->sprite.getPosition(), this->sprite.getRotation());
+    }
+
     // Update flames position
     this->_flames_sprite.move(this->velocity * delta_time);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -128,4 +135,8 @@ void Player::update(float delta_time)
     // window.draw(this->hitbox);
     // Draw player to screen
     window.draw(this->sprite);
+}
+
+void Player::addProjVec(std::vector<Projectile> &projectiles) {
+    this->_projectiles = projectiles;
 }

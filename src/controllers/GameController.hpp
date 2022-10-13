@@ -3,6 +3,7 @@
 
 #include "game-objects/spaceship/Enemy.hpp"
 #include "game-objects/spaceship/Player.hpp"
+#include "game-objects/Projectile.hpp"
 #include "interfaces/Updatable.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <vector>
@@ -14,6 +15,7 @@ class GameController : public Updatable
     Player _player;
     std::vector<Enemy> _enemies;
     std::vector<Updatable> _updatables;
+    std::vector<Projectile> _projectiles;
     bool _isPaused;
 
   public:
