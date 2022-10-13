@@ -1,6 +1,6 @@
 #ifndef SRC_GAME_OBJECTS_PROJECTILE_HPP
 #define SRC_GAME_OBJECTS_PROJECTILE_HPP
-#include "abstract/GameObject.hpp"
+#include "spaceship/Spaceship.hpp"
 #include "util/FileSystem.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/Rect.hpp>
@@ -21,12 +21,13 @@ class Projectile: public GameObject
         sf::Sprite _sprite;
         sf::Texture _texture;
     public:
-        Projectile(sf::RenderWindow &window, float drag, Vector2f &velocity, const sf::Vector2f &position, float &rotation);
+        Projectile(sf::RenderWindow &window, float drag, Vector2f &velocity, const sf::Vector2f &position, float rotation);
         void update(float delta_time);
         Vector2f getVelocity();
         Vector2f getAcceleration();
         void setVelocity(const Vector2f &new_velocity);
         void setAcceleration(const Vector2f &new_acceleration);
+        //static Spaceship *_player;
 
 };
 

@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include "game-objects/spaceship/Spaceship.hpp"
+#include "../abstract/GameObject.hpp"
 #include "util/FileSystem.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/Color.hpp>
@@ -86,14 +87,14 @@ void Player::update(float delta_time)
         if (this->_curr_flames_tex_i >= static_cast<int>(this->_flames_textures.size()) * 2)
             this->_curr_flames_tex_i = 0;
     }
+    
+    //after spaceship moved to new position check for firing
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        this->_projectiles.emplace_back(Projectile(this->window, this->drag, this->velocity, this->sprite.getPosition(), this->sprite.getRotation()));
+    }
 
     // Run common spaceship update tick
     Spaceship::update(delta_time);
-
-    //after spaceship moved to new position check for firing
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        this->_projectiles.emplace_back(this->window, this->drag, this->velocity, this->sprite.getPosition(), this->sprite.getRotation());
-    }
 
     // Update flames position
     this->_flames_sprite.move(this->velocity * delta_time);
@@ -135,8 +136,4 @@ void Player::update(float delta_time)
     // window.draw(this->hitbox);
     // Draw player to screen
     window.draw(this->sprite);
-}
-
-void Player::addProjVec(std::vector<Projectile> &projectiles) {
-    this->_projectiles = projectiles;
 }

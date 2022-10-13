@@ -15,7 +15,6 @@ class Player : public Spaceship
   private:
     const float kRotateSpeed = 400;
     std::vector<sf::Texture> _flames_textures;
-    std::vector<Projectile> _projectiles;
     sf::Sprite _flames_sprite;
     int _curr_flames_tex_i = 0;
     int _lives;
@@ -38,7 +37,7 @@ class Player : public Spaceship
 
     void update(float delta_time) override;
 
-    void addProjVec(std::vector<Projectile> &projectiles);
+    std::vector<Projectile> _projectiles;
 };
 
 #endif // SRC_GAME_OBJECTS_SPACESHIP_PLAYER_HPP
