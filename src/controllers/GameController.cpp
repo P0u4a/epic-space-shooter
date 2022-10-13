@@ -9,12 +9,13 @@ GameController::GameController(sf::RenderWindow &window)
           Player(window, 1000.0, 500.0, 1.5, 3, {10, 10}, {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right})),
       _isPaused(false)
 {
+    auto [window_w, window_h] = static_cast<sf::Vector2f>(window.getSize());
     // Configure player 1 position and colour
     _firstPlayer.setSprite(sf::Color::Red);
-    _firstPlayer.setPosition(300.0, 500.0);
+    _firstPlayer.setPosition(0.25*window_w, 0.5*window_h);
     // Configure player 2 position and colour
     _secondPlayer.setSprite(sf::Color::Green);
-    _secondPlayer.setPosition(1500, 500.0);
+    _secondPlayer.setPosition(0.75*window_w, 0.5*window_h);
 }
 
 bool GameController::getPaused() const
