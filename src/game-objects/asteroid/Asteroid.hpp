@@ -18,7 +18,7 @@ class Asteroid : public GameObject
     sf::Sprite sprite;
     sf::Texture texture;
 
-    Asteroid(sf::RenderWindow &window, float drag);
+    Asteroid(sf::RenderWindow &window, float drag, Vector2f scale, const std::string &sprite_file);
     void setVelocity(const Vector2f &new_velocity) override;
     void setAcceleration(const Vector2f &new_acceleration) override;
     void setPosition(float x, float y);
