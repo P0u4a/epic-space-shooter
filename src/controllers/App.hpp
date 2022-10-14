@@ -1,9 +1,8 @@
-// TODO: Add Main Menu to App
-
 #ifndef SRC_CONTROLLERS_APP_HPP
 #define SRC_CONTROLLERS_APP_HPP
 
 #include "./GameController.hpp"
+#include "ui/MainMenu.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/ContextSettings.hpp>
@@ -20,12 +19,13 @@ class App
                          "Epic Space Shooter", sf::Style::Titlebar | sf::Style::Close, _settings);
     sf::Clock _clock;
     GameController _gameController;
-    bool _isInGame;
+    MainMenu _mainMenu;
+    static bool _isInGame;
 
   public:
     App();
     bool getIsInGame() const;
-    void setIsInGame(bool in_game);
+    static void setIsInGame(bool in_game);
     int beginGameLoop();
 };
 
