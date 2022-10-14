@@ -24,7 +24,7 @@ class App
 
   public:
     App();
-    bool getIsInGame() const;
+    static bool getIsInGame();
     static void setIsInGame(bool in_game);
     int beginGameLoop();
 };

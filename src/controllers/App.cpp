@@ -12,7 +12,7 @@ App::App() : _gameController(_window), _mainMenu(_window)
     this->_window.setVerticalSyncEnabled(true);
 }
 
-bool App::getIsInGame() const
+bool App::getIsInGame()
 {
     return _isInGame;
 }
@@ -25,8 +25,6 @@ void App::setIsInGame(bool in_game)
 int App::beginGameLoop()
 {
     // TODO debug, remove
-    // this->_isInGame = false;
-
     // Add background
     auto background = sf::RectangleShape(static_cast<sf::Vector2f>(this->_window.getSize()));
     sf::Texture bg_texture;
@@ -71,5 +69,5 @@ int App::beginGameLoop()
     }
     return 0;
 }
-
+// // Initialise static variable here
 bool App::_isInGame = false;
