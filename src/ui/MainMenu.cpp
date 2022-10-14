@@ -5,8 +5,8 @@
 #include <SFML/Window/Keyboard.hpp>
 
 MainMenu::MainMenu(sf::RenderWindow &window)
-    : _window(window), _play(MenuButton(window, 0.4, 0.3, "Press X to Play")),
-      _quit(MenuButton(window, 0.4, 0.7, "Press Esc to Quit"))
+    : _window(window), _play(MenuButton(window, 0.5, 0.3, "Press X to Play")),
+      _quit(MenuButton(window, 0.5, 0.5, "Press Esc to Quit"))
 {
 }
 
