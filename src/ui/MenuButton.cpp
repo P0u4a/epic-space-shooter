@@ -13,6 +13,7 @@ MenuButton::MenuButton(sf::RenderWindow &window, float pos_x, float pos_y, std::
         // Error while loading font - display message
         std::cout << "Bruh" << std::endl; // NOLINT(concurrency-mt-unsafe)
 
+    // Configure button text
     this->_text.setFont(_font);
     this->_text.setString(_label);
     this->_text.setFillColor(sf::Color::Yellow);
