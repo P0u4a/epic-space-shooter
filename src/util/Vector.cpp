@@ -1,6 +1,7 @@
 #include "./Vector.hpp"
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
+#include <stdexcept>
 
 float Vector2f::magnitude() const
 {
@@ -9,7 +10,10 @@ float Vector2f::magnitude() const
 
 Vector2f Vector2f::norm() const
 {
-    return (1 / this->magnitude()) * (*this);
+    const float magnitude = this->magnitude();
+    if (magnitude == 0)
+        throw std::runtime_error("Attempted to normalise zero vector");
+    return (1 / magnitude) * (*this);
 }
 
 Vector2f Vector2f::abs() const
