@@ -7,26 +7,24 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
-App::App() : _gameController(_window), _isInGame(false)
+App::App() : _gameController(_window), _mainMenu(_window)
 {
     this->_window.setVerticalSyncEnabled(true);
 }
 
-bool App::getIsInGame() const
+bool App::getIsInGame()
 {
-    return this->_isInGame;
+    return _isInGame;
 }
 
 void App::setIsInGame(bool in_game)
 {
-    this->_isInGame = in_game;
+    _isInGame = in_game;
 }
 
 int App::beginGameLoop()
 {
     // TODO debug, remove
-    this->_isInGame = true;
-
     // Add background
     auto background = sf::RectangleShape(static_cast<sf::Vector2f>(this->_window.getSize()));
     sf::Texture bg_texture;
@@ -60,7 +58,10 @@ int App::beginGameLoop()
         this->_window.draw(background);
 
         // Run next game tick if in game
-        if (this->_isInGame)
+        if (!_isInGame)
+            this->_mainMenu.update(time.asSeconds());
+
+        else
             this->_gameController.update(time.asSeconds());
 
         // Display the current frame
@@ -68,3 +69,5 @@ int App::beginGameLoop()
     }
     return 0;
 }
+// // Initialise static variable here
+bool App::_isInGame = false;
