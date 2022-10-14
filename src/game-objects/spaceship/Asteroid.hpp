@@ -1,6 +1,7 @@
 #ifndef __ASTEROID_H__
 #define __ASTEROID_H__
 
+#include "./Spaceship.hpp"
 #include "game-objects/abstract/GameObject.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/CircleShape.hpp>

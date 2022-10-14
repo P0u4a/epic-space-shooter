@@ -14,6 +14,7 @@ void Asteroid::update(float delta_time)
     auto move_by = this->velocity * delta_time;
     this->sprite.move(move_by);
     this->hitbox.move(move_by);
+    // TODO actually complete the update
 }
 
 Asteroid::Asteroid(sf::RenderWindow &window, float drag, Vector2f scale, const std::string &sprite_file)
