@@ -18,6 +18,13 @@ If you haven't already, set up a Conan profile.
 conan profile new default --detect
 ```
 
+You might also need to set your conan profile to use the libcxx c++11 abi and to use the c++ 17 std:
+
+```sh
+conan profile update settings.compiler.libcxx=libstdc++11 default
+conan profile update settings.cppstd=17 default
+```
+
 ### Installing dependencies
 
 ```sh
@@ -43,3 +50,18 @@ If you're building for MacOS, you'll have to add a couple of extra flags when bu
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMACOS=TRUE -DARM=TRUE
 ```
 Where `-DMACOS` sets up CMake to build for Mac, and `-DARM` is needed if you're using Apple silicon.
+
+### Testing
+
+To build tests, pass the `-DTEST=1` flag to cmake:
+
+```sh
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTEST=1 ...
+cmake --build build --config Release
+```
+
+Then to run the tests:
+
+```sh
+./build/bin/tests
+```
