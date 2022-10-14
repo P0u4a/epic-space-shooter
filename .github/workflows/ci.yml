@@ -36,5 +36,7 @@ jobs:
           cd ..
       - name: build
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCI=1
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCI=1 -DTEST=1
           cmake --build build --config Release
+      - name: test
+        run: ./build/bin/tests
