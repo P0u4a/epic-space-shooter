@@ -1,7 +1,6 @@
 #include "MenuButton.hpp"
 #include "util/FileSystem.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <iostream>
 
 MenuButton::MenuButton(sf::RenderWindow &window, float pos_x, float pos_y, std::string label) : _label(label)
 {
@@ -11,7 +10,7 @@ MenuButton::MenuButton(sf::RenderWindow &window, float pos_x, float pos_y, std::
     // Load font
     if (!this->_font.loadFromFile(FileSystem::getExecutablePath() + "assets/Minecraftia-Regular.ttf"))
         // Error while loading font - display message
-        std::cout << "Bruh" << std::endl; // NOLINT(concurrency-mt-unsafe)
+        exit(1); // NOLINT(concurrency-mt-unsafe)
 
     // Configure button text
     this->_text.setFont(_font);

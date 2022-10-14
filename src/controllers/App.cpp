@@ -61,7 +61,7 @@ int App::beginGameLoop()
         if (!_isInGame)
             this->_mainMenu.update(time.asSeconds());
 
-        if (_isInGame)
+        else
             this->_gameController.update(time.asSeconds());
 
         // Display the current frame
