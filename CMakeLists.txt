@@ -37,6 +37,14 @@ set(CMAKE_COLOR_MAKEFILE ON)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS src/*.cpp src/*.hpp)
+file(
+    GLOB_RECURSE
+    INC_FILES
+    CONFIGURE_DEPENDS
+    inc/*.cpp
+    inc/*.hpp
+    inc/*.c
+    inc/*.h)
 file(GLOB_RECURSE TEST_FILES CONFIGURE_DEPENDS test/*.cpp test/*.hpp)
 
 if(ENABLE_LINT)
@@ -68,7 +76,7 @@ include_directories(${CMAKE_SOURCE_DIR}/inc/whereami)
 
 file(COPY assets DESTINATION bin)
 
-add_library(SRC_LIB STATIC ${SOURCE_FILES})
+add_library(SRC_LIB STATIC ${SOURCE_FILES} ${INC_FILES})
 target_include_directories(SRC_LIB PRIVATE src)
 target_link_libraries(SRC_LIB ${CONAN_LIBS})
 
