@@ -12,18 +12,18 @@ class GameController : public Updatable
 {
   private:
     sf::RenderWindow &_window;
-    Player _player;
+    Player _firstPlayer;
+    Player _secondPlayer;
     std::vector<Enemy> _enemies;
     std::vector<Updatable> _updatables;
+    std::vector<Projectile> _projectiles;
     bool _isPaused;
 
   public:
     explicit GameController(sf::RenderWindow &window);
     bool getPaused() const;
     void setPaused(bool paused);
-    // Need to implement updatable function
     void update(float delta_time) override;
-    static std::vector<Projectile> _projectiles;
 };
 
 #endif // SRC_CONTROLLERS_GAMECONTROLLER_HPP

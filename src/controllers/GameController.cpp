@@ -3,9 +3,23 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 GameController::GameController(sf::RenderWindow &window)
-    : _window(window), _player(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10})), _isPaused(false)
+    : _window(window), _firstPlayer(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10},
+                                           {sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D})),
+      _secondPlayer(
+          Player(window, 1000.0, 500.0, 1.5, 3, {10, 10}, {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right})),
+      _isPaused(false)
 {
-    //Projectile::_player = &_player;
+    //add bits for includes to filesys and load sprite/image here with location/position and rotation of ship
+    if (!Projectile::_texture.loadFromFile(FileSystem::getExecutablePath() + "assets/bullet.png"))
+        // Error while loading texture - exit program
+        exit(1); // NOLINT(concurrency-mt-unsafe)
+    auto [window_w, window_h] = static_cast<sf::Vector2f>(window.getSize());
+    // Configure player 1 position and colour
+    _firstPlayer.setSprite(sf::Color::Red);
+    _firstPlayer.setPosition(0.25F*window_w, 0.5F*window_h);
+    // Configure player 2 position and colour
+    _secondPlayer.setSprite(sf::Color::Green);
+    _secondPlayer.setPosition(0.75F*window_w, 0.5F*window_h);
 }
 
 bool GameController::getPaused() const
@@ -27,8 +41,17 @@ void GameController::update(float delta_time)
     if (this->_isPaused)
         return;
 
-    // Update player state
-    this->_player.update(delta_time);
+    // Update player states
+    this->_firstPlayer.update(delta_time);
+    this->_secondPlayer.update(delta_time);
+
+    if (this->_firstPlayer.fired) {
+        this->_projectiles.emplace_back(this->_window, 0, this->_firstPlayer.getVelocity(), this->_firstPlayer.hitbox.getPosition(), this->_firstPlayer.hitbox.getRotation());
+    }
+    if (this->_secondPlayer.fired) {
+        this->_projectiles.emplace_back(Projectile());
+    }
+
     // Loop through all enemies and update their state
     for (auto &enemy : this->_enemies)
         enemy.update(delta_time);
@@ -36,6 +59,6 @@ void GameController::update(float delta_time)
     for (auto &updateable : this->_updatables)
         updateable.update(delta_time);
     // Loop through all bullets
-    for (auto &projectile : _player._projectiles)
+    for (auto &projectile : _projectiles)
         projectile.update(delta_time);
 }
