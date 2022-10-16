@@ -7,7 +7,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
-App::App() : _gameController(_window), _mainMenu(_window)
+App::App() : _gameController(_window), _pauseOverlay(_window), _mainMenu(_window)
 {
     this->_window.setVerticalSyncEnabled(true);
 }
@@ -62,7 +62,10 @@ int App::beginGameLoop()
             this->_mainMenu.update(time.asSeconds());
 
         else
+        {
             this->_gameController.update(time.asSeconds());
+            this->_pauseOverlay.update(time.asSeconds());
+        }
 
         // Display the current frame
         this->_window.display();
