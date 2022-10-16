@@ -8,26 +8,26 @@ PauseOverlay::PauseOverlay(sf::RenderWindow &window)
 {
 }
 
-void PauseOverlay::update(float delta_time)
+void PauseOverlay::update(float /*delta_time*/)
 {
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         _is_esc_pressed = false;
 
-    if (_isVisible)
+    if (is_visible)
     {
         _window.draw(_resume.getButton());
         _window.draw(_quit.getButton());
 
         if (!_is_esc_pressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
-            _isVisible = false;
+            is_visible = false;
             _is_esc_pressed = true;
             return;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
         {
-            _isVisible = false;
+            is_visible = false;
             App::setIsInGame(false);
         }
     }
@@ -35,7 +35,7 @@ void PauseOverlay::update(float delta_time)
     {
         if (!_is_esc_pressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
-            _isVisible = true;
+            is_visible = true;
             _is_esc_pressed = true;
             return;
         }
@@ -44,10 +44,10 @@ void PauseOverlay::update(float delta_time)
 
 bool PauseOverlay::getVisibility()
 {
-    return _isVisible;
+    return is_visible;
 }
 
 void PauseOverlay::setVisibility(bool visibility)
 {
-    _isVisible = visibility;
+    is_visible = visibility;
 }

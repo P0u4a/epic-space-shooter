@@ -1,6 +1,6 @@
 #include "Player.hpp"
 #include "game-objects/spaceship/Spaceship.hpp"
-#include "util/FileSystem.hpp"
+#include "util/AssetLoader.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -19,12 +19,7 @@ Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration
     this->_flames_textures.resize(4);
     // Load flames textures
     for (int i = 0; i < 4; i++)
-    {
-        if (!this->_flames_textures[i].loadFromFile(FileSystem::getExecutablePath() + "assets/player-flames-sprite-" +
-                                                    std::to_string(i) + ".png"))
-            // Error while loading texture - exit program
-            exit(1); // NOLINT(concurrency-mt-unsafe)
-    }
+        AssetLoader::loadTextureAsset(this->_flames_textures[i], "player-flames-sprite-" + std::to_string(i) + ".png");
     // Set initial flames sprite position and scaling
     this->_flames_sprite.setPosition(this->sprite.getPosition());
     this->_flames_sprite.setScale(scale);

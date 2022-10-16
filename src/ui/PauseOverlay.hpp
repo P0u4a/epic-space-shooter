@@ -15,7 +15,7 @@ class PauseOverlay : public Updatable
     MenuButton _quit;
     bool _is_esc_pressed = false;
     // Control the visibility of the pause overlay with this
-    inline static bool _isVisible = false;
+    inline static bool is_visible = false;
 
   public:
     explicit PauseOverlay(sf::RenderWindow &window);
