@@ -37,14 +37,6 @@ set(CMAKE_COLOR_MAKEFILE ON)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS src/*.cpp src/*.hpp)
-file(
-    GLOB_RECURSE
-    INC_FILES
-    CONFIGURE_DEPENDS
-    inc/*.cpp
-    inc/*.hpp
-    inc/*.c
-    inc/*.h)
 file(GLOB_RECURSE TEST_FILES CONFIGURE_DEPENDS test/*.cpp test/*.hpp)
 
 if(ENABLE_LINT)
@@ -76,18 +68,20 @@ include_directories(${CMAKE_SOURCE_DIR}/inc/whereami)
 
 file(COPY assets DESTINATION bin)
 
-add_library(SRC_LIB STATIC ${SOURCE_FILES} ${INC_FILES})
+add_library(WHEREAMI STATIC inc/whereami/whereami.cpp inc/whereami/whereami.hpp)
+
+add_library(SRC_LIB STATIC ${SOURCE_FILES})
 target_include_directories(SRC_LIB PRIVATE src)
 target_link_libraries(SRC_LIB ${CONAN_LIBS})
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE src)
-target_link_libraries(${PROJECT_NAME} SRC_LIB ${CONAN_LIBS})
+target_link_libraries(${PROJECT_NAME} SRC_LIB WHEREAMI ${CONAN_LIBS})
 
 if(TEST)
     add_executable(tests ${TEST_FILES})
-    target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR})
-    target_link_libraries(tests SRC_LIB)
+    target_include_directories(tests PRIVATE src ${CMAKE_SOURCE_DIR})
+    target_link_libraries(tests SRC_LIB WHEREAMI ${CONAN_LIBS})
 
     include(CTest)
     include(Catch)

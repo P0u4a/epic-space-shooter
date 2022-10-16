@@ -14,12 +14,12 @@ App::App() : _gameController(_window), _mainMenu(_window)
 
 bool App::getIsInGame()
 {
-    return _isInGame;
+    return is_in_game;
 }
 
 void App::setIsInGame(bool in_game)
 {
-    _isInGame = in_game;
+    is_in_game = in_game;
 }
 
 int App::beginGameLoop()
@@ -58,7 +58,7 @@ int App::beginGameLoop()
         this->_window.draw(background);
 
         // Run next game tick if in game
-        if (!_isInGame)
+        if (!is_in_game)
             this->_mainMenu.update(time.asSeconds());
 
         else
@@ -69,5 +69,3 @@ int App::beginGameLoop()
     }
     return 0;
 }
-// // Initialise static variable here
-bool App::_isInGame = false;

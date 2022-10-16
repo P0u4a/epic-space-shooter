@@ -21,7 +21,8 @@ jobs:
           libxcb-render-util0-dev libxcb-xkb-dev libxcb-icccm4-dev \
           libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev \
           libxcb-shape0-dev libxcb-sync-dev libxcb-xfixes0-dev libxss-dev \
-          libxcb-xinerama0-dev libxcb-dri3-dev libxcb-util0-dev libxcb-util-dev
+          libxcb-xinerama0-dev libxcb-dri3-dev libxcb-util0-dev libxcb-util-dev \
+          libsfml-dev
       - name: setup-conan
         run: |
           pip install conan
