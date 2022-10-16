@@ -12,10 +12,10 @@ GameController::GameController(sf::RenderWindow &window)
     auto [window_w, window_h] = static_cast<sf::Vector2f>(window.getSize());
     // Configure player 1 position and colour
     _firstPlayer.setSprite(sf::Color::Red);
-    _firstPlayer.setPosition(0.25*window_w, 0.5*window_h);
+    _firstPlayer.setPosition(0.25F * window_w, 0.5F * window_h);
     // Configure player 2 position and colour
     _secondPlayer.setSprite(sf::Color::Green);
-    _secondPlayer.setPosition(0.75*window_w, 0.5*window_h);
+    _secondPlayer.setPosition(0.75F * window_w, 0.5F * window_h);
 }
 
 bool GameController::getPaused() const

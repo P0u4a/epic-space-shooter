@@ -2,19 +2,17 @@
 #include "util/FileSystem.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <utility>
 
-MenuButton::MenuButton(sf::RenderWindow &window, float pos_x, float pos_y, std::string label) : _label(label)
+MenuButton::MenuButton(sf::RenderWindow &window, float pos_x, float pos_y, std::string label) : _label(std::move(label))
 {
     // Get window size
     auto [window_w, window_h] = static_cast<sf::Vector2f>(window.getSize());
 
     // Load font
     if (!this->_font.loadFromFile(FileSystem::getExecutablePath() + "assets/Minecraftia-Regular.ttf"))
-        // Error while loading font - display message
+        // Error while loading font - exit program
         exit(1); // NOLINT(concurrency-mt-unsafe)
-
-    // float x = (window_w - this->_text.getGlobalBounds().width)/ 2;
-    // float y = (window_h - this->_text.getGlobalBounds().height)/2;
 
     // Configure button text
     this->_text.setFont(_font);
