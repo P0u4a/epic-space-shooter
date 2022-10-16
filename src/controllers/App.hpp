@@ -8,7 +8,7 @@
 #include <SFML/Window/ContextSettings.hpp>
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/WindowStyle.hpp>
-
+#include "ui/PauseOverlay.hpp"
 class App
 {
   private:
@@ -19,6 +19,7 @@ class App
                          "Epic Space Shooter", sf::Style::Titlebar | sf::Style::Close, _settings);
     sf::Clock _clock;
     GameController _gameController;
+    PauseOverlay _pauseOverlay;
     MainMenu _mainMenu;
     inline static bool is_in_game = false;
 

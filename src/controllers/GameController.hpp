@@ -15,12 +15,10 @@ class GameController : public Updatable
     Player _secondPlayer;
     std::vector<Enemy> _enemies;
     std::vector<Updatable> _updatables;
-    bool _isPaused;
+    // bool _isPaused;
 
   public:
     explicit GameController(sf::RenderWindow &window);
-    bool getPaused() const;
-    void setPaused(bool paused);
     void update(float delta_time) override;
 };
 
