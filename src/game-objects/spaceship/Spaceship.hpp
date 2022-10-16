@@ -16,7 +16,7 @@ class Spaceship : public GameObject
     float max_acceleration;
     sf::CircleShape hitbox;
     sf::Sprite sprite;
-    sf::Texture texture;
+    sf::Texture *texture = nullptr;
 
   public:
     Spaceship(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, Vector2f scale,

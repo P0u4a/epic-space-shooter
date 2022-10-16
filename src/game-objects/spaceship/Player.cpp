@@ -24,7 +24,7 @@ Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration
     this->_flames_sprite.setPosition(this->sprite.getPosition());
     this->_flames_sprite.setScale(scale);
     // Set flames sprite origin to spaceship centroid
-    this->_flames_sprite.setOrigin(static_cast<sf::Vector2f>(this->_flames_textures[0].getSize()) / 2.0F);
+    this->_flames_sprite.setOrigin(static_cast<sf::Vector2f>(this->_flames_textures[0]->getSize()) / 2.0F);
 }
 
 int Player::getLives() const
@@ -60,7 +60,7 @@ void Player::accelerateForwards()
     auto theta = static_cast<float>((this->hitbox.getRotation() * M_PI / 180) - M_PI_2);
     this->setAcceleration(Vector2f(std::cos(theta), std::sin(theta)) * max_acceleration);
     // Display flames sprite this frame
-    this->_flames_sprite.setTexture(this->_flames_textures[std::floor(this->_curr_flames_tex_i / 2)]);
+    this->_flames_sprite.setTexture(*this->_flames_textures[std::floor(this->_curr_flames_tex_i / 2)]);
     // Set new flames sprite texture index - use same texture for 2 frames
     this->_curr_flames_tex_i++;
     if (this->_curr_flames_tex_i >= static_cast<int>(this->_flames_textures.size()) * 2)

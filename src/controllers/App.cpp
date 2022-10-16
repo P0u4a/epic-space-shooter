@@ -26,12 +26,13 @@ int App::beginGameLoop()
 {
     // Add background
     auto background = sf::RectangleShape(static_cast<sf::Vector2f>(this->_window.getSize()));
-    sf::Texture bg_texture;
+    sf::Texture *bg_texture = nullptr;
     AssetLoader::loadTextureAsset(bg_texture, "background.png");
     auto [window_w, window_h] = static_cast<sf::Vector2i>(this->_window.getSize());
-    bg_texture.setRepeated(true);
+    if (bg_texture != nullptr)
+        bg_texture->setRepeated(true);
     background.setTextureRect({0, 0, window_w, window_h});
-    background.setTexture(&bg_texture);
+    background.setTexture(bg_texture);
     background.setScale({4, 4});
 
     // Run main game loop as long as the window is open

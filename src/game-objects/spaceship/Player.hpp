@@ -14,7 +14,7 @@ class Player : public Spaceship
 {
   private:
     const float kRotateSpeed = 400;
-    std::vector<sf::Texture> _flames_textures;
+    std::vector<sf::Texture *> _flames_textures;
     sf::Sprite _flames_sprite;
     int _curr_flames_tex_i = 0;
     int _lives;
