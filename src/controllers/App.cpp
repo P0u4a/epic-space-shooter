@@ -1,38 +1,33 @@
 #include "App.hpp"
 #include "controllers/GameController.hpp"
-#include "util/FileSystem.hpp"
+#include "util/AssetLoader.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Glsl.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
-App::App() : _gameController(_window), _isInGame(false)
+App::App() : _gameController(_window), _pauseOverlay(_window), _mainMenu(_window)
 {
     this->_window.setVerticalSyncEnabled(true);
 }
 
-bool App::getIsInGame() const
+bool App::getIsInGame()
 {
-    return this->_isInGame;
+    return is_in_game;
 }
 
 void App::setIsInGame(bool in_game)
 {
-    this->_isInGame = in_game;
+    is_in_game = in_game;
 }
 
 int App::beginGameLoop()
 {
-    // TODO debug, remove
-    this->_isInGame = true;
-
     // Add background
     auto background = sf::RectangleShape(static_cast<sf::Vector2f>(this->_window.getSize()));
     sf::Texture bg_texture;
-    if (!bg_texture.loadFromFile(FileSystem::getExecutablePath() + "assets/background.png"))
-        // Error while loading texture
-        return 1;
+    AssetLoader::loadTextureAsset(bg_texture, "background.png");
     auto [window_w, window_h] = static_cast<sf::Vector2i>(this->_window.getSize());
     bg_texture.setRepeated(true);
     background.setTextureRect({0, 0, window_w, window_h});
@@ -60,8 +55,14 @@ int App::beginGameLoop()
         this->_window.draw(background);
 
         // Run next game tick if in game
-        if (this->_isInGame)
+        if (!is_in_game)
+            this->_mainMenu.update(time.asSeconds());
+
+        else
+        {
             this->_gameController.update(time.asSeconds());
+            this->_pauseOverlay.update(time.asSeconds());
+        }
 
         // Display the current frame
         this->_window.display();

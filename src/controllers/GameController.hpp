@@ -18,12 +18,10 @@ class GameController : public Updatable
     std::vector<Enemy> _enemies;
     std::vector<Updatable> _updatables;
     std::vector<std::unique_ptr<Projectile>> _projectiles;
-    bool _isPaused;
+    // bool _isPaused;
 
   public:
     explicit GameController(sf::RenderWindow &window);
-    bool getPaused() const;
-    void setPaused(bool paused);
     void update(float delta_time) override;
 };
 

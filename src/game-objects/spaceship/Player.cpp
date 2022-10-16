@@ -1,7 +1,7 @@
 #include "Player.hpp"
 #include "game-objects/spaceship/Spaceship.hpp"
 #include "game-objects/abstract/GameObject.hpp"
-#include "util/FileSystem.hpp"
+#include "util/AssetLoader.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -14,21 +14,14 @@
 #include <vector>
 
 Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
-               moveKeys keys)
-    : timeSinceFire(69.420), Spaceship(window, max_speed, max_acceleration, drag, scale,
-                {0, 0},
-                "player-sprite.png"),
-      _lives(lives), _keys({keys.moveUp, keys.rotateLeft, keys.rotateRight, keys.fire}), fired(false)
+               MoveKeys keys)
+    : timeSinceFire(69.420), Spaceship(window, max_speed, max_acceleration, drag, scale, {0, 0}, "player-sprite.png"), _lives(lives),
+      _keys({keys.move_up, keys.rotate_left, keys.rotate_right, keys.fire}), fired(false)
 {
     this->_flames_textures.resize(4);
     // Load flames textures
     for (int i = 0; i < 4; i++)
-    {
-        if (!this->_flames_textures[i].loadFromFile(FileSystem::getExecutablePath() + "assets/player-flames-sprite-" +
-                                                    std::to_string(i) + ".png"))
-            // Error while loading texture - exit program
-            exit(1); // NOLINT(concurrency-mt-unsafe)
-    }
+        AssetLoader::loadTextureAsset(this->_flames_textures[i], "player-flames-sprite-" + std::to_string(i) + ".png");
     // Set initial flames sprite position and scaling
     this->_flames_sprite.setPosition(this->sprite.getPosition());
     this->_flames_sprite.setScale(scale);
@@ -63,30 +56,35 @@ void Player::setPosition(float x, float y)
     this->_flames_sprite.setPosition(x, y);
 }
 
+void Player::accelerateForwards()
+{
+    // Get rotation in radians
+    auto theta = static_cast<float>((this->hitbox.getRotation() * M_PI / 180) - M_PI_2);
+    this->setAcceleration(Vector2f(std::cos(theta), std::sin(theta)) * max_acceleration);
+    // Display flames sprite this frame
+    this->_flames_sprite.setTexture(this->_flames_textures[std::floor(this->_curr_flames_tex_i / 2)]);
+    // Set new flames sprite texture index - use same texture for 2 frames
+    this->_curr_flames_tex_i++;
+    if (this->_curr_flames_tex_i >= static_cast<int>(this->_flames_textures.size()) * 2)
+        this->_curr_flames_tex_i = 0;
+}
+
 void Player::update(float delta_time)
 {
     timeSinceFire += delta_time;
     // Rotate player anticlockwise
-    if (sf::Keyboard::isKeyPressed(_keys.rotateLeft))
+    if (sf::Keyboard::isKeyPressed(_keys.rotate_left))
         this->rotate(-400 * delta_time);
     // Rotate player clockwise
-    else if (sf::Keyboard::isKeyPressed(_keys.rotateRight))
+    else if (sf::Keyboard::isKeyPressed(_keys.rotate_right))
         this->rotate(400 * delta_time);
 
     // Reset acceleration for this tick
     this->setAcceleration({0, 0});
     // Add forward acceleration in direction being faced
-    if (sf::Keyboard::isKeyPressed(_keys.moveUp))
+    if (sf::Keyboard::isKeyPressed(_keys.move_up))
     {
-        // Get rotation in radians
-        auto theta = static_cast<float>((this->hitbox.getRotation() * M_PI / 180) - M_PI_2);
-        this->setAcceleration(Vector2f(std::cos(theta), std::sin(theta)) * max_acceleration);
-        // Display flames sprite this frame
-        this->_flames_sprite.setTexture(this->_flames_textures[std::floor(this->_curr_flames_tex_i / 2)]);
-        // Set new flames sprite texture index - use same texture for 2 frames
-        this->_curr_flames_tex_i++;
-        if (this->_curr_flames_tex_i >= static_cast<int>(this->_flames_textures.size()) * 2)
-            this->_curr_flames_tex_i = 0;
+        this->accelerateForwards();
     }
     
     //after spaceship moved to new position check for firing
@@ -100,7 +98,7 @@ void Player::update(float delta_time)
 
     // Update flames position
     this->_flames_sprite.move(this->velocity * delta_time);
-    if (sf::Keyboard::isKeyPressed(_keys.moveUp))
+    if (sf::Keyboard::isKeyPressed(_keys.move_up))
         this->_window.draw(this->_flames_sprite);
 
     // No acceleration applied - apply drag
