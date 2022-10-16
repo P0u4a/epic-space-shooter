@@ -3,13 +3,12 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 GameController::GameController(sf::RenderWindow &window)
-    : _window(window), _firstPlayer(Player(1000.0, 500.0, 1.5, 3, {10, 10},
+    : _window(window), _firstPlayer(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10},
                                            {sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S})),
       _secondPlayer(
-          Player(1000.0, 500.0, 1.5, 3, {10, 10}, {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down})),
+          Player(window, 1000.0, 500.0, 1.5, 3, {10, 10}, {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down})),
       _isPaused(false)
 {
-    GameObject::setWindow(&_window);
     //add bits for includes to filesys and load sprite/image here with location/position and rotation of ship
     if (!Projectile::_texture.loadFromFile(FileSystem::getExecutablePath() + "assets/bullet.png")){
         // Error while loading texture - exit program
@@ -49,11 +48,13 @@ void GameController::update(float delta_time)
 
     //for both palyers check if they fired and create more bullets
     if (this->_firstPlayer.fired) {
-        this->_projectiles.emplace_back(0, this->_firstPlayer.hitbox.getPosition(), this->_firstPlayer.hitbox.getRotation(), this->_secondPlayer);
+        auto *temp = new Projectile(this->_window, 0, this->_firstPlayer.hitbox.getPosition(), this->_firstPlayer.hitbox.getRotation(), this->_secondPlayer);
+        this->_projectiles.emplace_back(temp);
         this->_firstPlayer.fired = false;
     }
     if (this->_secondPlayer.fired) {
-        this->_projectiles.emplace_back(0, this->_secondPlayer.hitbox.getPosition(), this->_secondPlayer.hitbox.getRotation(), this->_firstPlayer);
+        auto *temp = new Projectile(this->_window, 0, this->_secondPlayer.hitbox.getPosition(), this->_secondPlayer.hitbox.getRotation(), this->_firstPlayer);
+        this->_projectiles.emplace_back(temp);
         this->_secondPlayer.fired = false;
     }
 
@@ -65,8 +66,9 @@ void GameController::update(float delta_time)
         updateable.update(delta_time);
     // Loop through all bullets
     for (auto itr = this->_projectiles.begin(); itr != this->_projectiles.end(); ){
-        itr->update(delta_time);
-        if(!itr->render) {
+        (*itr)->update(delta_time);
+        if(!(*itr)->render) {
+            delete (*itr);
             //code to remove itr at current value to delete bullet
             _projectiles.erase(itr);
         }

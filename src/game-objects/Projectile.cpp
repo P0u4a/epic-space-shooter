@@ -1,10 +1,10 @@
 #include "./Projectile.hpp"
 #include "cmath"
 
-Projectile::Projectile(float drag, const sf::Vector2f &position, float rotation, Player &player) : GameObject(drag), _player(player), render(true)
+Projectile::Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f &position, float rotation, Player &player) : GameObject(window, drag), _player(player), render(true)
 {
     auto theta = static_cast<float>(-rotation * M_PI / 180);
-    this->velocity = {-500*std::sin(theta), -500*std::cos(theta)}; //change to be max_vel in dir of ship using angle
+    this->velocity = {-1111*std::sin(theta), -1111*std::cos(theta)}; //change to be max_vel in dir of ship using angle
     this->acceleration = {0, 0};
     this->_sprite.setTexture(Projectile::_texture);
     // Set initial sprite position
@@ -22,20 +22,20 @@ void Projectile::update(float delta_time) {
     this->_sprite.move(this->velocity * delta_time);
 
     //checking for collisions with player
-
+    this->_player.hitbox.;
 
     //checking for collisions with asteroids
 
 
     //checking if on screen
-    auto [window_w, window_h] = static_cast<sf::Vector2f>(GameObject::_window->getSize());
+    auto [window_w, window_h] = static_cast<sf::Vector2f>(this->_window.getSize());
     if (this->_sprite.getPosition().x > window_w || this->_sprite.getPosition().x < 0 || this->_sprite.getPosition().y > window_h || this->_sprite.getPosition().y < 0){
         //allows the larger controller to know to not render this object
         this->render = false;
     }
     
     //pushing changes to window
-    GameObject::_window->draw(this->_sprite);
+    this->_window.draw(this->_sprite);
 };
 
 Vector2f Projectile::getVelocity() {

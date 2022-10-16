@@ -21,7 +21,7 @@ class Projectile: public GameObject
         sf::Sprite _sprite;
         Player _player;
     public:
-        Projectile(float drag, const sf::Vector2f &position, float rotation, Player &player);
+        Projectile(sf::RenderWindow &_window, float drag, const sf::Vector2f &position, float rotation, Player &player);
         Projectile(const Projectile &projectile) = default;
         void update(float delta_time);
         Vector2f getVelocity();

@@ -12,12 +12,12 @@
 class GameController : public Updatable
 {
   private:
-    sf::RenderWindow _window;
+    sf::RenderWindow &_window;
     Player _firstPlayer;
     Player _secondPlayer;
     std::vector<Enemy> _enemies;
     std::vector<Updatable> _updatables;
-    std::vector<Projectile> _projectiles;
+    std::vector<Projectile*> _projectiles;
     bool _isPaused;
 
   public:
