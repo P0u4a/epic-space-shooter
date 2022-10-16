@@ -17,7 +17,7 @@ class GameController : public Updatable
     Player _secondPlayer;
     std::vector<Enemy> _enemies;
     std::vector<Updatable> _updatables;
-    std::vector<Projectile*> _projectiles;
+    std::vector<std::unique_ptr<Projectile>> _projectiles;
     bool _isPaused;
 
   public:

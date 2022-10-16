@@ -31,6 +31,7 @@ class Projectile: public GameObject
         //static Spaceship *_player;
         inline static sf::Texture _texture;
         bool render;
+        bool in_player();
 };
 
 

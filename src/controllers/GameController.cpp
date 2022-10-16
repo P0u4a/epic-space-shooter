@@ -68,7 +68,6 @@ void GameController::update(float delta_time)
     for (auto itr = this->_projectiles.begin(); itr != this->_projectiles.end(); ){
         (*itr)->update(delta_time);
         if(!(*itr)->render) {
-            delete (*itr);
             //code to remove itr at current value to delete bullet
             _projectiles.erase(itr);
         }

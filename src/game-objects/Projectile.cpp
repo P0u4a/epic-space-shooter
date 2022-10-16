@@ -18,14 +18,19 @@ Projectile::Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f 
 };
 
 void Projectile::update(float delta_time) {
-    //move projectile in its own manner
-    this->_sprite.move(this->velocity * delta_time);
 
     //checking for collisions with player
-    this->_player.hitbox.;
+    if (in_player()) {
+        this->_player.removeLives(1);
+        this->render = false;
+        std::cout << "player hit" << std::endl;
+    }
 
     //checking for collisions with asteroids
 
+
+    //move projectile in its own manner
+    this->_sprite.move(this->velocity * delta_time);
 
     //checking if on screen
     auto [window_w, window_h] = static_cast<sf::Vector2f>(this->_window.getSize());
@@ -52,4 +57,38 @@ void Projectile::setVelocity(const Vector2f &new_velocity) {
 
 void Projectile::setAcceleration(const Vector2f &new_acceleration){
     this->acceleration = new_acceleration;
+}
+
+bool Projectile::in_player(){
+    //get vector of all points in hitbox
+    auto points = 3;
+    //std::cout << points << std::endl;
+
+    //vector of bullet location transformed same as the player
+    auto me = this->_sprite.getPosition();
+    //std::cout << "Here" << std::endl;
+    
+    //vector storing points in player
+    std::vector<sf::Vector2f> temp;
+    temp.assign(points, {0,0});
+    for (int i = 0; i < points; i++) {
+        temp.at(i) = this->_player.hitbox.getTransform().transformPoint(this->_player.hitbox.getPoint(i));
+    }
+    //std::cout << "Here" << std::endl;
+
+    //calculate all triangle areas
+    float areas_total = 0;
+    //std::cout<<areas_total<<std::endl;
+    for (int i = 0; i < 3; i++){
+        areas_total += std::abs(((temp.at(i).x - me.x) * (temp.at((i+1) % points).y - me.y)) - ((temp.at((i+1) % points).x - me.x) * (temp.at(i).y - me.y)));
+    }
+    //std::cout << areas_total << std::endl;
+    
+    float check = std::abs(((temp.at(1).x - temp.at(0).x) * (temp.at(2).y - temp.at(0).y)) - ((temp.at(2).x - temp.at(0).x) * (temp.at(1).y - temp.at(0).y)));
+    if (areas_total == check){
+        //std::cout << check << std::endl;
+        return true;
+    }
+
+    return false;
 }

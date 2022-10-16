@@ -135,7 +135,7 @@ void Player::update(float delta_time)
         this->setPosition(player_x, window_h + (player_h / 2) - push_offset);
 
     // Draw hitbox to screen
-    // window.draw(this->hitbox);
+    //this->_window.draw(this->hitbox);
     // Draw player to screen
     this->_window.draw(this->sprite);
 }
