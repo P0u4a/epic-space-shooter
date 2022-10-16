@@ -1,12 +1,9 @@
-#include <catch2/matchers/catch_matchers.hpp>
-#include <iostream>
-#define BUILD_TESTING
-
 #include "src/game-objects/spaceship/Player.hpp"
 #include "src/util/Vector.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 // NOLINTBEGIN

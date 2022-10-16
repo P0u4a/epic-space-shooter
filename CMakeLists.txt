@@ -81,7 +81,7 @@ target_link_libraries(${PROJECT_NAME} SRC_LIB WHEREAMI ${CONAN_LIBS})
 if(TEST)
     add_executable(tests ${TEST_FILES})
     target_include_directories(tests PRIVATE src ${CMAKE_SOURCE_DIR})
-    target_link_libraries(tests SRC_LIB WHEREAMI)
+    target_link_libraries(tests SRC_LIB WHEREAMI ${CONAN_LIBS})
 
     include(CTest)
     include(Catch)
