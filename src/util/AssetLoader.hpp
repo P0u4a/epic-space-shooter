@@ -1,5 +1,5 @@
-#ifndef SRC_UTIL_ASSETLOADER_HPPAAA
-#define SRC_UTIL_ASSETLOADER_HPPAAA
+#ifndef SRC_UTIL_ASSETLOADER_HPP
+#define SRC_UTIL_ASSETLOADER_HPP
 
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -15,4 +15,4 @@ class AssetLoader
     static void loadTextureAsset(sf::Texture &texture, const std::string &asset_rel_path);
 };
 
-#endif // SRC_UTIL_ASSETLOADER_HPPAAA
+#endif // SRC_UTIL_ASSETLOADER_HPP
