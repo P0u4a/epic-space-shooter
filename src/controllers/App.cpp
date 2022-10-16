@@ -1,6 +1,6 @@
 #include "App.hpp"
 #include "controllers/GameController.hpp"
-#include "util/FileSystem.hpp"
+#include "util/AssetLoader.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Glsl.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -24,13 +24,10 @@ void App::setIsInGame(bool in_game)
 
 int App::beginGameLoop()
 {
-    // TODO debug, remove
     // Add background
     auto background = sf::RectangleShape(static_cast<sf::Vector2f>(this->_window.getSize()));
     sf::Texture bg_texture;
-    if (!bg_texture.loadFromFile(FileSystem::getExecutablePath() + "assets/background.png"))
-        // Error while loading texture
-        return 1;
+    AssetLoader::loadTextureAsset(bg_texture, "background.png");
     auto [window_w, window_h] = static_cast<sf::Vector2i>(this->_window.getSize());
     bg_texture.setRepeated(true);
     background.setTextureRect({0, 0, window_w, window_h});
