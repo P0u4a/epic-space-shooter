@@ -1,31 +1,41 @@
 #include "./Projectile.hpp"
+#include "cmath"
 
-Projectile::Projectile(sf::RenderWindow &window, float drag, Vector2f &velocity, const sf::Vector2f &position, float rotation) : GameObject(window, drag)
+Projectile::Projectile(float drag, const sf::Vector2f &position, float rotation, Player &player) : GameObject(drag), _player(player), render(true)
 {
-    this->velocity = velocity * 500; //change to be max_vel in dir of ship using angle
+    auto theta = static_cast<float>(-rotation * M_PI / 180);
+    this->velocity = {-500*std::sin(theta), -500*std::cos(theta)}; //change to be max_vel in dir of ship using angle
     this->acceleration = {0, 0};
     this->_sprite.setTexture(Projectile::_texture);
     // Set initial sprite position
     this->_sprite.setPosition(position); //window.getsize().x
     // set initial sprite rotation
-    this->_sprite.setRotation(rotation + 90); //supposed to rotate image to point same direction as ship
+    this->_sprite.setRotation(rotation - 90); //supposed to rotate image to point same direction as ship
     // Apply custom x and y scaling to sprite
-    this->_sprite.setScale({0.1, 0.1});
+    this->_sprite.setScale({0.2, 0.2});
     // Set sprite origin to centroid of texture
     this->_sprite.setOrigin(static_cast<sf::Vector2f>(Projectile::_texture.getSize()) / 2.0F);
 };
 
 void Projectile::update(float delta_time) {
-    //add pointer for player here to check position/hitbox
+    //move projectile in its own manner
     this->_sprite.move(this->velocity * delta_time);
 
-    //checking for collisions
+    //checking for collisions with player
+
+
+    //checking for collisions with asteroids
 
 
     //checking if on screen
+    auto [window_w, window_h] = static_cast<sf::Vector2f>(GameObject::_window->getSize());
+    if (this->_sprite.getPosition().x > window_w || this->_sprite.getPosition().x < 0 || this->_sprite.getPosition().y > window_h || this->_sprite.getPosition().y < 0){
+        //allows the larger controller to know to not render this object
+        this->render = false;
+    }
     
     //pushing changes to window
-    window.draw(this->_sprite);
+    GameObject::_window->draw(this->_sprite);
 };
 
 Vector2f Projectile::getVelocity() {

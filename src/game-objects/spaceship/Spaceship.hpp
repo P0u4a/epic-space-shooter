@@ -18,7 +18,7 @@ class Spaceship : public GameObject
     sf::Texture texture;
 
   public:
-    Spaceship(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, Vector2f scale,
+    Spaceship(float max_speed, float max_acceleration, float drag, Vector2f scale,
               Vector2f init_pos, const std::string &sprite_file);
 
     void setVelocity(const Vector2f &new_velocity) override;

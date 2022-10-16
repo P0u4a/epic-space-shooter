@@ -10,3 +10,7 @@ Vector2f GameObject::getAcceleration() const
 {
     return this->acceleration;
 }
+
+void GameObject::setWindow(sf::RenderWindow *window) {
+    _window = window;
+}

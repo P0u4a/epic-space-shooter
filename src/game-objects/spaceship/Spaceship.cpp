@@ -1,4 +1,4 @@
-#include "./Player.hpp"
+#include "./Spaceship.hpp"
 #include "util/FileSystem.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/Rect.hpp>
@@ -8,9 +8,9 @@
 #include <iostream>
 #include <string>
 
-Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, Vector2f scale,
+Spaceship::Spaceship(float max_speed, float max_acceleration, float drag, Vector2f scale,
                      Vector2f init_pos, const std::string &sprite_file)
-    : GameObject(window, drag), max_speed(max_speed), max_acceleration(max_acceleration), hitbox(1, 3)
+    : GameObject(drag), max_speed(max_speed), max_acceleration(max_acceleration), hitbox(1, 3)
 {
     // Load texture and set as sprite texture
     if (!this->texture.loadFromFile(FileSystem::getExecutablePath() + "assets/" + sprite_file))

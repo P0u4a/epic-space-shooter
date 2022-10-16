@@ -12,7 +12,6 @@
 class Player : public Spaceship
 {
   private:
-    const float kRotateSpeed = 400;
     std::vector<sf::Texture> _flames_textures;
     sf::Sprite _flames_sprite;
     int _curr_flames_tex_i = 0;
@@ -24,12 +23,14 @@ class Player : public Spaceship
         sf::Keyboard::Key moveUp;
         sf::Keyboard::Key rotateLeft;
         sf::Keyboard::Key rotateRight;
+        sf::Keyboard::Key fire;
 
     } _keys;
 
   public:
-    Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
+    Player(float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
            moveKeys keys);
+    Player(const Player &player) = default;
 
     int getLives() const;
 
