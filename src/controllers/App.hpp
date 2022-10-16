@@ -20,7 +20,7 @@ class App
     sf::Clock _clock;
     GameController _gameController;
     MainMenu _mainMenu;
-    inline static bool is_in_game = false;
+    static bool _isInGame;
 
   public:
     App();

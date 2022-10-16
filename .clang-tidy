@@ -20,7 +20,6 @@ Checks: "
   -bugprone-easily-swappable-parameters,
   -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-non-private-member-variables-in-classes,
-  -cppcoreguidelines-avoid-non-const-global-variables,
   -cppcoreguidelines-owning-memory,
   -google-readability-todo,
   -google-readability-braces-around-statements,
