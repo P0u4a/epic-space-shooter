@@ -114,7 +114,7 @@ void Player::update(float delta_time)
         return;
     }
 
-    _time_since_fire += delta_time;
+    this->_time_since_fire += delta_time;
     // Rotate player anticlockwise
     if (sf::Keyboard::isKeyPressed(_keys.rotate_left))
         this->rotate(-kRotateSpeed * delta_time);

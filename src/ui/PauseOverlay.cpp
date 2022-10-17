@@ -8,38 +8,43 @@ PauseOverlay::PauseOverlay(sf::RenderWindow &window)
 {
 }
 
-void PauseOverlay::update(float /*delta_time*/)
+bool PauseOverlay::update(float /*delta_time*/)
 {
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-        _is_esc_pressed = false;
+        this->_is_esc_pressed = false;
 
     if (is_visible)
     {
-        _window.draw(_resume.getButton());
-        _window.draw(_quit.getButton());
+        this->_window.draw(this->_resume.getButton());
+        this->_window.draw(this->_quit.getButton());
 
+        // Return to game
         if (!_is_esc_pressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
             is_visible = false;
-            _is_esc_pressed = true;
-            return;
+            this->_is_esc_pressed = true;
+            return false;
         }
-
+        // Exit to main menu
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
         {
             is_visible = false;
             App::setIsInGame(false);
+            return true;
         }
     }
     else
     {
+        // Open pause menu
         if (!_is_esc_pressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
             is_visible = true;
-            _is_esc_pressed = true;
-            return;
+            this->_is_esc_pressed = true;
+            return false;
         }
     }
+
+    return false;
 }
 
 bool PauseOverlay::getVisibility()

@@ -17,11 +17,11 @@ GameController::GameController(sf::RenderWindow &window)
     AssetLoader::loadTextureAsset(Projectile::texture, "bullet.png");
     auto [window_w, window_h] = static_cast<sf::Vector2f>(this->_window.getSize());
     // Configure player 1 position and colour
-    _firstPlayer.setSprite(sf::Color::Red);
-    _firstPlayer.setPosition(0.25F * window_w, 0.5F * window_h);
+    this->_firstPlayer.setSprite(sf::Color::Red);
+    this->_firstPlayer.setPosition(0.25F * window_w, 0.5F * window_h);
     // Configure player 2 position and colour
-    _secondPlayer.setSprite(sf::Color::Green);
-    _secondPlayer.setPosition(0.75F * window_w, 0.5F * window_h);
+    this->_secondPlayer.setSprite(sf::Color::Green);
+    this->_secondPlayer.setPosition(0.75F * window_w, 0.5F * window_h);
 }
 
 /**
@@ -65,7 +65,7 @@ bool GameController::runGameTick(float delta_time)
         (*itr)->update(delta_time);
         if (!(*itr)->render)
             // Delete projectile
-            _projectiles.erase(itr);
+            this->_projectiles.erase(itr);
         else
             ++itr;
     }

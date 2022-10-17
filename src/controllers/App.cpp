@@ -74,8 +74,8 @@ int App::beginGameLoop()
         // Run next game tick if in game
         else
         {
-            this->_is_game_over = this->_gameController.runGameTick(time.asSeconds());
-            this->_pauseOverlay.update(time.asSeconds());
+            this->_is_game_over =
+                this->_gameController.runGameTick(time.asSeconds()) || this->_pauseOverlay.update(time.asSeconds());
         }
 
         // Display the current frame
