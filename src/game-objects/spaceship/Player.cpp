@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "controllers/App.hpp"
 #include "game-objects/abstract/GameObject.hpp"
 #include "game-objects/spaceship/Spaceship.hpp"
 #include "util/AssetLoader.hpp"
@@ -16,7 +17,7 @@
 Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
                MoveKeys keys)
     : Spaceship(window, max_speed, max_acceleration, drag, scale, {0, 0}, "player-sprite.png"), _lives(lives),
-      _time_since_fire(69.420), _keys({keys.move_up, keys.rotate_left, keys.rotate_right, keys.fire}), fired(false)
+      _time_since_fire(69.420), _keys({keys.move_up, keys.rotate_left, keys.rotate_right, keys.fire}), _game_over(window, 0.5, 0.3, "Game Over!"),_game_over_msg(MenuButton(window, 0.5, 0.5, "Press R to Return Home")), fired(false)
 {
     this->_flames_textures.resize(4);
     // Load flames textures
@@ -28,6 +29,16 @@ Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration
     // Set flames sprite origin to spaceship centroid
     if (this->_flames_textures[0] != nullptr)
         this->_flames_sprite.setOrigin(static_cast<sf::Vector2f>(this->_flames_textures[0]->getSize()) / 2.0F);
+    
+    this->_explosion_textures.resize(5);
+
+    for (int i = 0; i < 5; i++)
+        AssetLoader::loadTextureAsset(this->_explosion_textures[i], "explosion" + std::to_string(i) + ".png");
+    
+    this->_explosion_sprite.setPosition(this->sprite.getPosition());
+    this->_explosion_sprite.setScale(scale);
+    if (this->_explosion_textures[0] != nullptr)
+        this->_explosion_sprite.setOrigin(static_cast<sf::Vector2f>(this->_explosion_textures[0]->getSize()) / 2.0F);
 }
 
 int Player::getLives() const
@@ -74,6 +85,17 @@ void Player::accelerateForwards()
 
 void Player::update(float delta_time)
 {
+    if (this->_lives <=0 ) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        {
+            App::setIsInGame(false);
+        }
+
+        window.draw(_game_over_msg.getButton());
+        window.draw(_game_over.getButton());
+        return;
+    }
+
     _time_since_fire += delta_time;
     // Rotate player anticlockwise
     if (sf::Keyboard::isKeyPressed(_keys.rotate_left))
