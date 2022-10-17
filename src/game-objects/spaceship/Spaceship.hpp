@@ -12,6 +12,7 @@
 class Spaceship : public GameObject
 {
   protected:
+    const float kRotateSpeed = 400;
     float max_speed;
     float max_acceleration;
     sf::Sprite sprite;

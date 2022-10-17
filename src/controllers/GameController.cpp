@@ -1,6 +1,8 @@
 #include "./GameController.hpp"
+#include "game-objects/Projectile.hpp"
 #include "game-objects/spaceship/Player.hpp"
 #include "ui/PauseOverlay.hpp"
+#include "util/AssetLoader.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 
 GameController::GameController(sf::RenderWindow &window)
@@ -9,13 +11,9 @@ GameController::GameController(sf::RenderWindow &window)
       _secondPlayer(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10},
                            {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down}))
 {
-    // add bits for includes to filesys and load sprite/image here with location/position and rotation of ship
-    // TODO load using AssetLoader
-    if (!Projectile::_texture.loadFromFile(FileSystem::getExecutablePath() + "assets/bullet.png"))
-    {
-        // Error while loading texture - exit program
-        exit(1); // NOLINT(concurrency-mt-unsafe)
-    }
+    // Load projectile texture
+    // TODO change to pointer
+    AssetLoader::loadTextureAsset(Projectile::texture, "bullet.png");
     auto [window_w, window_h] = static_cast<sf::Vector2f>(this->_window.getSize());
     // Configure player 1 position and colour
     _firstPlayer.setSprite(sf::Color::Red);

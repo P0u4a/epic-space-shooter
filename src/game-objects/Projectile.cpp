@@ -9,15 +9,19 @@ Projectile::Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f 
     this->velocity = {-1111 * std::sin(theta),
                       -1111 * std::cos(theta)}; // change to be max_vel in dir of ship using angle
     this->acceleration = {0, 0};
-    this->_sprite.setTexture(Projectile::_texture);
+    // TODO
+    // if (Projectile::texture != nullptr)
+    // {
+    this->_sprite.setTexture(Projectile::texture);
+    // Set sprite origin to centroid of texture
+    this->_sprite.setOrigin(static_cast<sf::Vector2f>(Projectile::texture.getSize()) / 2.0F);
+    // }
     // Set initial sprite position
     this->_sprite.setPosition(position); // window.getsize().x
     // set initial sprite rotation
     this->_sprite.setRotation(rotation - 90); // supposed to rotate image to point same direction as ship
     // Apply custom x and y scaling to sprite
     this->_sprite.setScale({0.2, 0.2});
-    // Set sprite origin to centroid of texture
-    this->_sprite.setOrigin(static_cast<sf::Vector2f>(Projectile::_texture.getSize()) / 2.0F);
 };
 
 void Projectile::update(float delta_time)

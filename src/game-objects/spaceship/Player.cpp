@@ -74,10 +74,10 @@ void Player::update(float delta_time)
     _time_since_fire += delta_time;
     // Rotate player anticlockwise
     if (sf::Keyboard::isKeyPressed(_keys.rotate_left))
-        this->rotate(-400 * delta_time);
+        this->rotate(-kRotateSpeed * delta_time);
     // Rotate player clockwise
     else if (sf::Keyboard::isKeyPressed(_keys.rotate_right))
-        this->rotate(400 * delta_time);
+        this->rotate(kRotateSpeed * delta_time);
 
     // Reset acceleration for this tick
     this->setAcceleration({0, 0});

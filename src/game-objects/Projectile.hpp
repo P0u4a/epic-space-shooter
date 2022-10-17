@@ -22,13 +22,17 @@ class Projectile : public GameObject
 
   public:
     Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f &position, float rotation, Player &player);
+
     void update(float delta_time) override;
+
     void setVelocity(const Vector2f &new_velocity) override;
     void setAcceleration(const Vector2f &new_acceleration) override;
-    // TODO fix
-    inline static sf::Texture _texture;
+
     bool render;
     bool inPlayer();
+
+    // TODO change to pointer
+    inline static sf::Texture texture;
 };
 
 #endif // SRC_GAME_OBJECTS_PROJECTILE_HPP
