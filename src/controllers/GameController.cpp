@@ -1,15 +1,22 @@
 #include "./GameController.hpp"
+#include "game-objects/Projectile.hpp"
 #include "game-objects/spaceship/Player.hpp"
-#include <SFML/Graphics/RenderWindow.hpp>
 #include "ui/PauseOverlay.hpp"
+#include "util/AssetLoader.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <memory>
+#include <utility>
 
 GameController::GameController(sf::RenderWindow &window)
     : _window(window), _firstPlayer(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10},
-                                           {sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D})),
-      _secondPlayer(
-          Player(window, 1000.0, 500.0, 1.5, 3, {10, 10}, {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right}))
+                                           {sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S})),
+      _secondPlayer(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10},
+                           {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down}))
 {
-    auto [window_w, window_h] = static_cast<sf::Vector2f>(window.getSize());
+    // Load projectile texture
+    // TODO change to pointer
+    AssetLoader::loadTextureAsset(Projectile::texture, "bullet.png");
+    auto [window_w, window_h] = static_cast<sf::Vector2f>(this->_window.getSize());
     // Configure player 1 position and colour
     _firstPlayer.setSprite(sf::Color::Red);
     _firstPlayer.setPosition(0.25F * window_w, 0.5F * window_h);
@@ -31,10 +38,32 @@ void GameController::update(float delta_time)
     this->_firstPlayer.update(delta_time);
     this->_secondPlayer.update(delta_time);
 
-    // Loop through all enemies and update their state
-    for (auto &enemy : this->_enemies)
-        enemy.update(delta_time);
-    // Loop through all remaining updateable objects and update their state
-    for (auto &updateable : this->_updatables)
-        updateable.update(delta_time);
+    // For both palyers check if they fired and create more projectiles
+    if (this->_firstPlayer.fired)
+    {
+        auto new_projectile =
+            std::make_unique<Projectile>(this->_window, 0, this->_firstPlayer.getHitbox().getPosition(),
+                                         this->_firstPlayer.getHitbox().getRotation(), this->_secondPlayer);
+        this->_projectiles.push_back(std::move(new_projectile));
+        this->_firstPlayer.fired = false;
+    }
+    if (this->_secondPlayer.fired)
+    {
+        auto new_projectile =
+            std::make_unique<Projectile>(this->_window, 0, this->_secondPlayer.getHitbox().getPosition(),
+                                         this->_secondPlayer.getHitbox().getRotation(), this->_firstPlayer);
+        this->_projectiles.push_back(std::move(new_projectile));
+        this->_secondPlayer.fired = false;
+    }
+
+    // Loop through all projectiles
+    for (auto itr = this->_projectiles.begin(); itr != this->_projectiles.end();)
+    {
+        (*itr)->update(delta_time);
+        if (!(*itr)->render)
+            // Delete projectile
+            _projectiles.erase(itr);
+        else
+            ++itr;
+    }
 }
