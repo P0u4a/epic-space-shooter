@@ -17,7 +17,9 @@
 Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
                MoveKeys keys)
     : Spaceship(window, max_speed, max_acceleration, drag, scale, {0, 0}, "player-sprite.png"), _lives(lives),
-      _time_since_fire(69.420), _keys({keys.move_up, keys.rotate_left, keys.rotate_right, keys.fire}), _game_over(window, 0.5, 0.3, "Game Over!"),_game_over_msg(MenuButton(window, 0.5, 0.5, "Press R to Return Home")), fired(false)
+      _time_since_fire(69.420), _game_over(window, 0.5, 0.3, "Game Over!"),
+      _game_over_msg(MenuButton(window, 0.5, 0.5, "Press R to Return Home")),
+      _keys({keys.move_up, keys.rotate_left, keys.rotate_right, keys.fire}), fired(false)
 {
     this->_flames_textures.resize(4);
     // Load flames textures
@@ -29,12 +31,12 @@ Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration
     // Set flames sprite origin to spaceship centroid
     if (this->_flames_textures[0] != nullptr)
         this->_flames_sprite.setOrigin(static_cast<sf::Vector2f>(this->_flames_textures[0]->getSize()) / 2.0F);
-    
+
     this->_explosion_textures.resize(5);
 
     for (int i = 0; i < 5; i++)
         AssetLoader::loadTextureAsset(this->_explosion_textures[i], "explosion" + std::to_string(i) + ".png");
-    
+
     this->_explosion_sprite.setScale(scale);
     if (this->_explosion_textures[0] != nullptr)
         this->_explosion_sprite.setOrigin(static_cast<sf::Vector2f>(this->_explosion_textures[0]->getSize()) / 2.0F);
@@ -84,7 +86,8 @@ void Player::accelerateForwards()
 
 void Player::update(float delta_time)
 {
-    if (this->_lives <=0 ) {
+    if (this->_lives <= 0)
+    {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
         {
             App::setIsInGame(false);
@@ -92,18 +95,18 @@ void Player::update(float delta_time)
 
         this->_explosion_sprite.setPosition(this->sprite.getPosition());
 
-        const int explosion_tex_index = std::floor(this->_curr_explosion_tex_i / 2);
+        const int explosion_tex_index = std::floor(this->_curr_explosion_tex_i / 10);
 
         if (this->_explosion_textures[explosion_tex_index] != nullptr)
             this->_explosion_sprite.setTexture(*this->_explosion_textures[explosion_tex_index]);
 
+        // Play explosion animation
         this->_curr_explosion_tex_i++;
 
-        // Loop the explosion animation
-        if (this->_curr_explosion_tex_i >= static_cast<int>(this->_explosion_textures.size()))
-            this->_curr_explosion_tex_i = 0;
-    
-        this->window.draw(this->_explosion_sprite);
+        // Only draw texture while animation playing - stop drawing after animation over
+        if (explosion_tex_index < static_cast<int>(this->_explosion_textures.size()))
+            this->window.draw(this->_explosion_sprite);
+
         // Draw game over screen
         this->window.draw(_game_over_msg.getButton());
         this->window.draw(_game_over.getButton());
