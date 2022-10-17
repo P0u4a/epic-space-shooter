@@ -9,13 +9,12 @@ Projectile::Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f 
     auto theta = static_cast<float>(-rotation * M_PI / 180.0F);
     this->velocity = Vector2f(std::sin(theta), std::cos(theta)) * -kProjectileSpeed;
     this->acceleration = {0, 0};
-    // TODO
-    // if (Projectile::texture != nullptr)
-    // {
-    this->_sprite.setTexture(Projectile::texture);
-    // Set sprite origin to centroid of texture
-    this->_sprite.setOrigin(static_cast<sf::Vector2f>(Projectile::texture.getSize()) / 2.0F);
-    // }
+    if (Projectile::texture != nullptr)
+    {
+        this->_sprite.setTexture(*Projectile::texture);
+        // Set sprite origin to centroid of texture
+        this->_sprite.setOrigin(static_cast<sf::Vector2f>(Projectile::texture->getSize()) / 2.0F);
+    }
     // Set initial sprite position
     this->_sprite.setPosition(position); // window.getsize().x
     // Det initial sprite rotation

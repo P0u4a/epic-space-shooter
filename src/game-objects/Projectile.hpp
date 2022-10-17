@@ -31,8 +31,7 @@ class Projectile : public GameObject
     bool render;
     bool inPlayer();
 
-    // TODO change to pointer
-    inline static sf::Texture texture;
+    inline static sf::Texture *texture = nullptr;
 };
 
 #endif // SRC_GAME_OBJECTS_PROJECTILE_HPP

@@ -12,7 +12,7 @@ class AssetLoader
     inline static std::unordered_map<std::string, sf::Texture> textures;
 
   public:
-    static void loadTextureAsset(sf::Texture &texture, const std::string &asset_rel_path);
+    static void loadTextureAsset(sf::Texture *&texture, const std::string &asset_rel_path);
 };
 
 #endif // SRC_UTIL_ASSETLOADER_HPP
