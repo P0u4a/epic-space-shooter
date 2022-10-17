@@ -35,7 +35,6 @@ Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration
     for (int i = 0; i < 5; i++)
         AssetLoader::loadTextureAsset(this->_explosion_textures[i], "explosion" + std::to_string(i) + ".png");
     
-    this->_explosion_sprite.setPosition(this->sprite.getPosition());
     this->_explosion_sprite.setScale(scale);
     if (this->_explosion_textures[0] != nullptr)
         this->_explosion_sprite.setOrigin(static_cast<sf::Vector2f>(this->_explosion_textures[0]->getSize()) / 2.0F);
@@ -91,8 +90,24 @@ void Player::update(float delta_time)
             App::setIsInGame(false);
         }
 
-        window.draw(_game_over_msg.getButton());
-        window.draw(_game_over.getButton());
+        this->_explosion_sprite.setPosition(this->sprite.getPosition());
+
+        const int explosion_tex_index = std::floor(this->_curr_explosion_tex_i / 2);
+
+        if (this->_explosion_textures[explosion_tex_index] != nullptr)
+            this->_explosion_sprite.setTexture(*this->_explosion_textures[explosion_tex_index]);
+
+        this->_curr_explosion_tex_i++;
+
+        // Loop the explosion animation
+        if (this->_curr_explosion_tex_i >= static_cast<int>(this->_explosion_textures.size()))
+            this->_curr_explosion_tex_i = 0;
+    
+        this->window.draw(this->_explosion_sprite);
+        // Draw game over screen
+        this->window.draw(_game_over_msg.getButton());
+        this->window.draw(_game_over.getButton());
+        // Stop updating the losing player
         return;
     }
 
