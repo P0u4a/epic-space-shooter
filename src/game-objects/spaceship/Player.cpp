@@ -1,6 +1,6 @@
 #include "Player.hpp"
-#include "game-objects/spaceship/Spaceship.hpp"
 #include "game-objects/abstract/GameObject.hpp"
+#include "game-objects/spaceship/Spaceship.hpp"
 #include "util/AssetLoader.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/Color.hpp>
@@ -15,8 +15,8 @@
 
 Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
                MoveKeys keys)
-    : timeSinceFire(69.420), Spaceship(window, max_speed, max_acceleration, drag, scale, {0, 0}, "player-sprite.png"), _lives(lives),
-      _keys({keys.move_up, keys.rotate_left, keys.rotate_right, keys.fire}), fired(false)
+    : Spaceship(window, max_speed, max_acceleration, drag, scale, {0, 0}, "player-sprite.png"), _lives(lives),
+      _time_since_fire(69.420), _keys({keys.move_up, keys.rotate_left, keys.rotate_right, keys.fire}), fired(false)
 {
     this->_flames_textures.resize(4);
     // Load flames textures
@@ -71,7 +71,7 @@ void Player::accelerateForwards()
 
 void Player::update(float delta_time)
 {
-    timeSinceFire += delta_time;
+    _time_since_fire += delta_time;
     // Rotate player anticlockwise
     if (sf::Keyboard::isKeyPressed(_keys.rotate_left))
         this->rotate(-400 * delta_time);
@@ -86,11 +86,12 @@ void Player::update(float delta_time)
     {
         this->accelerateForwards();
     }
-    
-    //after spaceship moved to new position check for firing
-    if (sf::Keyboard::isKeyPressed(_keys.fire) && this->timeSinceFire >= 1.0/6.0) {
+
+    // after spaceship moved to new position check for firing
+    if (sf::Keyboard::isKeyPressed(_keys.fire) && this->_time_since_fire >= 1.0 / 6.0)
+    {
         this->fired = true;
-        this->timeSinceFire = 0;
+        this->_time_since_fire = 0;
     }
 
     // Run common spaceship update tick
@@ -99,7 +100,7 @@ void Player::update(float delta_time)
     // Update flames position
     this->_flames_sprite.move(this->velocity * delta_time);
     if (sf::Keyboard::isKeyPressed(_keys.move_up))
-        this->_window.draw(this->_flames_sprite);
+        this->window.draw(this->_flames_sprite);
 
     // No acceleration applied - apply drag
     if (this->acceleration.x == 0 && this->acceleration.y == 0 && this->velocity.magnitude() > 0)
@@ -111,7 +112,7 @@ void Player::update(float delta_time)
     }
 
     // Wrap player around to opposite edge of screen if exited on one edge
-    auto [window_w, window_h] = static_cast<sf::Vector2f>(this->_window.getSize());
+    auto [window_w, window_h] = static_cast<sf::Vector2f>(this->window.getSize());
     auto [player_x, player_y] = this->hitbox.getPosition();
     auto bounding_rect = this->hitbox.getGlobalBounds();
     auto player_w = bounding_rect.width;
@@ -133,7 +134,7 @@ void Player::update(float delta_time)
         this->setPosition(player_x, window_h + (player_h / 2) - push_offset);
 
     // Draw hitbox to screen
-    //this->_window.draw(this->hitbox);
+    // this->_window.draw(this->hitbox);
     // Draw player to screen
-    this->_window.draw(this->sprite);
+    this->window.draw(this->sprite);
 }

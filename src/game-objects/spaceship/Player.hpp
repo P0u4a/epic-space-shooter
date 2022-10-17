@@ -17,7 +17,7 @@ class Player : public Spaceship
     sf::Sprite _flames_sprite;
     int _curr_flames_tex_i = 0;
     int _lives;
-    float timeSinceFire;
+    float _time_since_fire;
 
     struct MoveKeys
     {
@@ -30,9 +30,8 @@ class Player : public Spaceship
     } _keys;
 
   public:
-    Player(sf::RenderWindow &_window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
+    Player(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, int lives, Vector2f scale,
            MoveKeys keys);
-    Player(const Player &player) = default;
 
     int getLives() const;
 
