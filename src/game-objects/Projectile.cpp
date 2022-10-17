@@ -1,13 +1,13 @@
 #include "./Projectile.hpp"
 #include "cmath"
+#include "util/Vector.hpp"
 
 Projectile::Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f &position, float rotation,
                        Player &player)
     : GameObject(window, drag), _player(player), render(true)
 {
-    auto theta = static_cast<float>(-rotation * M_PI / 180);
-    this->velocity = {-1111 * std::sin(theta),
-                      -1111 * std::cos(theta)}; // change to be max_vel in dir of ship using angle
+    auto theta = static_cast<float>(-rotation * M_PI / 180.0F);
+    this->velocity = Vector2f(std::sin(theta), std::cos(theta)) * -kProjectileSpeed;
     this->acceleration = {0, 0};
     // TODO
     // if (Projectile::texture != nullptr)
@@ -18,7 +18,7 @@ Projectile::Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f 
     // }
     // Set initial sprite position
     this->_sprite.setPosition(position); // window.getsize().x
-    // set initial sprite rotation
+    // Det initial sprite rotation
     this->_sprite.setRotation(rotation - 90); // supposed to rotate image to point same direction as ship
     // Apply custom x and y scaling to sprite
     this->_sprite.setScale({0.2, 0.2});
@@ -27,29 +27,30 @@ Projectile::Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f 
 void Projectile::update(float delta_time)
 {
 
-    // checking for collisions with player
+    // Check for collisions with player
     if (inPlayer())
     {
         this->_player.removeLives(1);
         this->render = false;
+        // TODO remove; debug
         std::cout << "player hit" << std::endl;
     }
 
-    // checking for collisions with asteroids
+    // Check for collisions with asteroids
 
-    // move projectile in its own manner
+    // Move projectile forward
     this->_sprite.move(this->velocity * delta_time);
 
-    // checking if on screen
+    // Checking if on screen
     auto [window_w, window_h] = static_cast<sf::Vector2f>(this->window.getSize());
     if (this->_sprite.getPosition().x > window_w || this->_sprite.getPosition().x < 0 ||
         this->_sprite.getPosition().y > window_h || this->_sprite.getPosition().y < 0)
     {
-        // allows the larger controller to know to not render this object
+        // Flag gamecontroller to not render this projectile
         this->render = false;
     }
 
-    // pushing changes to window
+    // Push changes to window
     this->window.draw(this->_sprite);
 };
 
@@ -65,36 +66,28 @@ void Projectile::setAcceleration(const Vector2f &new_acceleration)
 
 bool Projectile::inPlayer()
 {
-    // get vector of all points in hitbox
-    auto points = 3;
-    // std::cout << points << std::endl;
+    const int n_points = 3;
+    // Bullet location transformed same as the player
+    auto projectile_pos = this->_sprite.getPosition();
 
-    // vector of bullet location transformed same as the player
-    auto me = this->_sprite.getPosition();
-    // std::cout << "Here" << std::endl;
-
-    // vector storing points in player
+    // Vector storing points in player
     std::vector<sf::Vector2f> temp;
-    temp.assign(points, {0, 0});
-    for (int i = 0; i < points; i++)
-    {
-        temp.at(i) = this->_player.hitbox.getTransform().transformPoint(this->_player.hitbox.getPoint(i));
-    }
-    // std::cout << "Here" << std::endl;
+    temp.assign(n_points, {0, 0});
+    for (int i = 0; i < n_points; i++)
+        temp[i] = this->_player.getHitbox().getTransform().transformPoint(this->_player.getHitbox().getPoint(i));
 
-    // calculate all triangle areas
+    // Calculate all triangle areas
     float areas_total = 0;
-    // std::cout<<areas_total<<std::endl;
     for (int i = 0; i < 3; i++)
     {
-        areas_total += std::abs(((temp.at(i).x - me.x) * (temp.at((i + 1) % points).y - me.y)) -
-                                ((temp.at((i + 1) % points).x - me.x) * (temp.at(i).y - me.y)));
+        areas_total += std::abs(((temp[i].x - projectile_pos.x) * (temp[(i + 1) % n_points].y - projectile_pos.y)) -
+                                ((temp[(i + 1) % n_points].x - projectile_pos.x) * (temp[i].y - projectile_pos.y)));
     }
-    // std::cout << areas_total << std::endl;
 
-    // TODO rename
-    const float check = std::abs(((temp.at(1).x - temp.at(0).x) * (temp.at(2).y - temp.at(0).y)) -
-                                 ((temp.at(2).x - temp.at(0).x) * (temp.at(1).y - temp.at(0).y)));
+    // TODO cache
+    const float real_hitbox_area = std::abs(((temp[1].x - temp[0].x) * (temp[2].y - temp[0].y)) -
+                                            ((temp[2].x - temp[0].x) * (temp[1].y - temp[0].y)));
 
-    return areas_total == check;
+    // Colliding with player if sum of sub-triangle areas == area of actual hitbox
+    return areas_total == real_hitbox_area;
 }

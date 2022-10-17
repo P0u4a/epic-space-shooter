@@ -39,15 +39,15 @@ void GameController::update(float delta_time)
     // for both palyers check if they fired and create more bullets
     if (this->_firstPlayer.fired)
     {
-        auto *temp = new Projectile(this->_window, 0, this->_firstPlayer.hitbox.getPosition(),
-                                    this->_firstPlayer.hitbox.getRotation(), this->_secondPlayer);
+        auto *temp = new Projectile(this->_window, 0, this->_firstPlayer.getHitbox().getPosition(),
+                                    this->_firstPlayer.getHitbox().getRotation(), this->_secondPlayer);
         this->_projectiles.emplace_back(temp);
         this->_firstPlayer.fired = false;
     }
     if (this->_secondPlayer.fired)
     {
-        auto *temp = new Projectile(this->_window, 0, this->_secondPlayer.hitbox.getPosition(),
-                                    this->_secondPlayer.hitbox.getRotation(), this->_firstPlayer);
+        auto *temp = new Projectile(this->_window, 0, this->_secondPlayer.getHitbox().getPosition(),
+                                    this->_secondPlayer.getHitbox().getRotation(), this->_firstPlayer);
         this->_projectiles.emplace_back(temp);
         this->_secondPlayer.fired = false;
     }

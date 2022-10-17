@@ -1,6 +1,7 @@
 #include "./Spaceship.hpp"
 #include "util/AssetLoader.hpp"
 #include "util/Vector.hpp"
+#include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -76,4 +77,9 @@ void Spaceship::setPosition(float x, float y)
 void Spaceship::setSprite(sf::Color color)
 {
     sprite.setColor(color);
+}
+
+sf::CircleShape &Spaceship::getHitbox()
+{
+    return this->hitbox;
 }
