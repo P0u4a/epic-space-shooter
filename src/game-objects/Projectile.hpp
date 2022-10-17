@@ -16,7 +16,7 @@
 class Projectile : public GameObject
 {
   private:
-    const float kProjectileSpeed = 1111;
+    const float kProjectileSpeed = 2000;
     sf::Sprite _sprite;
     Player &_player;
 

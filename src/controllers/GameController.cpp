@@ -8,9 +8,9 @@
 #include <utility>
 
 GameController::GameController(sf::RenderWindow &window)
-    : _window(window), _firstPlayer(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10},
+    : _window(window), _firstPlayer(Player(window, 1000.0, 500.0, 1.5, 5, {10, 10},
                                            {sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S})),
-      _secondPlayer(Player(window, 1000.0, 500.0, 1.5, 3, {10, 10},
+      _secondPlayer(Player(window, 1000.0, 500.0, 1.5, 5, {10, 10},
                            {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down}))
 {
     // Load projectile texture
