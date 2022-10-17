@@ -27,7 +27,7 @@ int App::beginGameLoop()
     // Add background
     auto background = sf::RectangleShape(static_cast<sf::Vector2f>(this->_window.getSize()));
     sf::Texture *bg_texture = nullptr;
-    AssetLoader::loadTextureAsset(bg_texture, "background.png");
+    AssetLoader::loadAsset(bg_texture, "background.png");
     auto [window_w, window_h] = static_cast<sf::Vector2i>(this->_window.getSize());
     if (bg_texture != nullptr)
     {
