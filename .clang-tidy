@@ -25,6 +25,7 @@ Checks: "
   -google-readability-todo,
   -google-readability-braces-around-statements,
   -llvm-include-order,
+  -llvm-header-guard,
   -misc-non-private-member-variables-in-classes,
   -modernize-use-trailing-return-type,
   -readability-braces-around-statements,

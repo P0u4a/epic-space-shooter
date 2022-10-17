@@ -18,6 +18,7 @@ class Player : public Spaceship
     sf::Sprite _flames_sprite;
     int _curr_flames_tex_i = 0;
     int _lives;
+    float _time_since_fire;
 
     struct MoveKeys
     {
@@ -25,6 +26,7 @@ class Player : public Spaceship
         sf::Keyboard::Key move_up;
         sf::Keyboard::Key rotate_left;
         sf::Keyboard::Key rotate_right;
+        sf::Keyboard::Key fire;
 
     } _keys;
 
@@ -33,6 +35,8 @@ class Player : public Spaceship
            MoveKeys keys);
 
     int getLives() const;
+
+    bool fired;
 
     /**
      * @brief Removes lives from the player

@@ -10,7 +10,7 @@ MainMenu::MainMenu(sf::RenderWindow &window)
 {
 }
 
-void MainMenu::update(float delta_time)
+void MainMenu::update(float /*delta_time*/)
 {
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))

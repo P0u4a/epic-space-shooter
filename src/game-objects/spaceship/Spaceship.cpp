@@ -1,11 +1,11 @@
 #include "./Spaceship.hpp"
 #include "util/AssetLoader.hpp"
 #include "util/Vector.hpp"
+#include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <algorithm>
-#include <iostream>
 #include <string>
 
 Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, Vector2f scale,
@@ -78,4 +78,9 @@ void Spaceship::setPosition(float x, float y)
 void Spaceship::setSprite(sf::Color color)
 {
     sprite.setColor(color);
+}
+
+sf::CircleShape &Spaceship::getHitbox()
+{
+    return this->hitbox;
 }
