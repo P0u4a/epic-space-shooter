@@ -30,9 +30,11 @@ int App::beginGameLoop()
     AssetLoader::loadTextureAsset(bg_texture, "background.png");
     auto [window_w, window_h] = static_cast<sf::Vector2i>(this->_window.getSize());
     if (bg_texture != nullptr)
+    {
         bg_texture->setRepeated(true);
+        background.setTexture(bg_texture);
+    }
     background.setTextureRect({0, 0, window_w, window_h});
-    background.setTexture(bg_texture);
     background.setScale({4, 4});
 
     // Run main game loop as long as the window is open

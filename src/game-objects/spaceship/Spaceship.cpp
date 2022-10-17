@@ -14,8 +14,9 @@ Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_accele
 {
     // Load texture and set as sprite texture
     AssetLoader::loadTextureAsset(this->texture, sprite_file);
-    this->sprite.setTexture(*this->texture);
-    // TODO remove debug
+    if (this->texture != nullptr)
+        this->sprite.setTexture(*this->texture);
+    // Debug
     this->hitbox.setFillColor(sf::Color::Green);
     // Set initial sprite position
     this->sprite.setPosition(init_pos);
@@ -34,7 +35,8 @@ Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_accele
     // Triangle centroid is the average x / y coordinates of the vertices
     this->hitbox.setOrigin(x_vert_sum / 3, y_vert_sum / 3);
     // Set sprite origin to centroid of texture
-    this->sprite.setOrigin(static_cast<sf::Vector2f>(this->texture->getSize()) / 2.0F);
+    if (this->texture != nullptr)
+        this->sprite.setOrigin(static_cast<sf::Vector2f>(this->texture->getSize()) / 2.0F);
 }
 
 void Spaceship::setVelocity(const Vector2f &new_velocity)
