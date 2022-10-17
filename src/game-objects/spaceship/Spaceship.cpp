@@ -6,7 +6,6 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <algorithm>
-#include <iostream>
 #include <string>
 
 Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_acceleration, float drag, Vector2f scale,

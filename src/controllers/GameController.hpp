@@ -2,7 +2,6 @@
 #define SRC_CONTROLLERS_GAMECONTROLLER_HPP
 
 #include "game-objects/Projectile.hpp"
-#include "game-objects/spaceship/Enemy.hpp"
 #include "game-objects/spaceship/Player.hpp"
 #include "interfaces/Updatable.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -14,8 +13,6 @@ class GameController : public Updatable
     sf::RenderWindow &_window;
     Player _firstPlayer;
     Player _secondPlayer;
-    std::vector<Enemy> _enemies;
-    std::vector<Updatable> _updatables;
     std::vector<std::unique_ptr<Projectile>> _projectiles;
 
   public:

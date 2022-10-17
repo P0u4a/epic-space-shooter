@@ -11,7 +11,6 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <algorithm>
-#include <iostream>
 #include <string>
 
 class Projectile : public GameObject

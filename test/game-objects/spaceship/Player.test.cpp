@@ -37,7 +37,7 @@ TEST_CASE("player movement is correctly handled", "[player]")
     int initial_lives = 5;
     int max_speed = 1000;
     int max_acceleration = 1000;
-    Player player(window, max_speed, max_acceleration, 0, 5, {0, 0}, {});
+    Player player(window, max_speed, max_acceleration, 0, initial_lives, {0, 0}, {});
 
     SECTION("player velocity initially zero")
     {

@@ -32,11 +32,7 @@ void Projectile::update(float delta_time)
     {
         this->_player.removeLives(1);
         this->render = false;
-        // TODO remove; debug
-        std::cout << "player hit" << std::endl;
     }
-
-    // Check for collisions with asteroids
 
     // Move projectile forward
     this->_sprite.move(this->velocity * delta_time);
@@ -84,7 +80,6 @@ bool Projectile::inPlayer()
                                 ((temp[(i + 1) % n_points].x - projectile_pos.x) * (temp[i].y - projectile_pos.y)));
     }
 
-    // TODO cache
     const float real_hitbox_area = std::abs(((temp[1].x - temp[0].x) * (temp[2].y - temp[0].y)) -
                                             ((temp[2].x - temp[0].x) * (temp[1].y - temp[0].y)));
 
