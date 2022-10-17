@@ -3,11 +3,10 @@
 
 #include "game-objects/Projectile.hpp"
 #include "game-objects/spaceship/Player.hpp"
-#include "interfaces/Updatable.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <vector>
 
-class GameController : public Updatable
+class GameController
 {
   private:
     sf::RenderWindow &_window;
@@ -17,7 +16,7 @@ class GameController : public Updatable
 
   public:
     explicit GameController(sf::RenderWindow &window);
-    void update(float delta_time) override;
+    bool runGameTick(float delta_time);
 };
 
 #endif // SRC_CONTROLLERS_GAMECONTROLLER_HPP

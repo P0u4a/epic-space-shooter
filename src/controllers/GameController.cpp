@@ -27,15 +27,19 @@ GameController::GameController(sf::RenderWindow &window)
 /**
  * @brief Run single game loop iteration - single game tick
  */
-void GameController::update(float delta_time)
+bool GameController::runGameTick(float delta_time)
 {
     // Don't run main game logic if paused
     if (PauseOverlay::getVisibility())
-        return;
+        return false;
 
     // Update player states
     this->_firstPlayer.update(delta_time);
     this->_secondPlayer.update(delta_time);
+
+    // Flag GameController for recreation after one player killed - game over
+    if (this->_firstPlayer.getLives() <= 0 || this->_secondPlayer.getLives() <= 0)
+        return true;
 
     // For both palyers check if they fired and create more projectiles
     if (this->_firstPlayer.fired)
@@ -65,4 +69,6 @@ void GameController::update(float delta_time)
         else
             ++itr;
     }
+
+    return false;
 }
