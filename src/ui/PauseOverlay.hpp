@@ -7,7 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <string>
 
-class PauseOverlay : public Updatable
+class PauseOverlay
 {
   private:
     sf::RenderWindow &_window;
@@ -19,9 +19,11 @@ class PauseOverlay : public Updatable
 
   public:
     explicit PauseOverlay(sf::RenderWindow &window);
-    void update(float delta_time) override;
+
     static bool getVisibility();
     static void setVisibility(bool visibility);
+
+    bool update(float delta_time);
 };
 
 #endif // SRC_UI_PAUSEOVERLAY_HPP

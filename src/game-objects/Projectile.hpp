@@ -16,9 +16,9 @@
 class Projectile : public GameObject
 {
   private:
-    const float kProjectileSpeed = 1111;
+    const float kProjectileSpeed = 2000;
     sf::Sprite _sprite;
-    Player _player;
+    Player &_player;
 
   public:
     Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f &position, float rotation, Player &player);

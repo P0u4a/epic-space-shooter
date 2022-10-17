@@ -21,6 +21,7 @@ class App
     GameController _gameController;
     PauseOverlay _pauseOverlay;
     MainMenu _mainMenu;
+    bool _is_game_over = false;
     inline static bool is_in_game = false;
 
   public:

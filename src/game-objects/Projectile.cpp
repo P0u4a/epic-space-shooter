@@ -62,13 +62,14 @@ void Projectile::setAcceleration(const Vector2f &new_acceleration)
 bool Projectile::inPlayer()
 {
     const int n_points = 3;
-    // Bullet location transformed same as the player
+    // Bullet loaded in for use in calculations to check if colliding with player
     auto projectile_pos = this->_sprite.getPosition();
 
     // Vector storing points in player
     std::vector<sf::Vector2f> temp;
     temp.assign(n_points, {0, 0});
     for (int i = 0; i < n_points; i++)
+        // loading player hitbox points in global coordinate grid not player local grid
         temp[i] = this->_player.getHitbox().getTransform().transformPoint(this->_player.getHitbox().getPoint(i));
 
     // Calculate all triangle areas

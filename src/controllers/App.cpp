@@ -57,14 +57,25 @@ int App::beginGameLoop()
         // Draw background
         this->_window.draw(background);
 
-        // Run next game tick if in game
+        // Update main menu while not in game
         if (!is_in_game)
+        {
             this->_mainMenu.update(time.asSeconds());
-
+            // Recreate GameController if game over
+            if (this->_is_game_over)
+            {
+                // Recreate the GameController to reset the game after game over
+                this->_gameController.~GameController();
+                // deepcode ignore CppMemoryLeak: placement-new will construct GameController in existing stack address
+                new (&this->_gameController) GameController(this->_window);
+                this->_is_game_over = false;
+            }
+        }
+        // Run next game tick if in game
         else
         {
-            this->_gameController.update(time.asSeconds());
-            this->_pauseOverlay.update(time.asSeconds());
+            this->_is_game_over =
+                this->_gameController.runGameTick(time.asSeconds()) || this->_pauseOverlay.update(time.asSeconds());
         }
 
         // Display the current frame
