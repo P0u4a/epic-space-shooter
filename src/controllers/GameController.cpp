@@ -14,7 +14,6 @@ GameController::GameController(sf::RenderWindow &window)
                            {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down}))
 {
     // Load projectile texture
-    // TODO change to pointer
     AssetLoader::loadTextureAsset(Projectile::texture, "bullet.png");
     auto [window_w, window_h] = static_cast<sf::Vector2f>(this->_window.getSize());
     // Configure player 1 position and colour
