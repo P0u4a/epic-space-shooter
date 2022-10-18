@@ -75,7 +75,7 @@ class Player : public Spaceship
     void accelerateForwards();
 
     /**
-     * @brief Update player; move player, check lives, draw necicary textures/sprites, fire bullets, adjust
+     * @brief Update player; move player, check lives, draw necessary textures/sprites, fire bullets, adjust
      * accleration/velocity
      *
      * @param delta_time Time since last frame
