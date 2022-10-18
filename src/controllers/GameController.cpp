@@ -3,8 +3,14 @@
 #include "game-objects/spaceship/Player.hpp"
 #include "ui/PauseOverlay.hpp"
 #include "util/AssetLoader.hpp"
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <array>
 #include <memory>
+#include <string>
 #include <utility>
 
 GameController::GameController(sf::RenderWindow &window)
@@ -14,7 +20,7 @@ GameController::GameController(sf::RenderWindow &window)
                            {sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down}))
 {
     // Load projectile texture
-    AssetLoader::loadTextureAsset(Projectile::texture, "bullet.png");
+    AssetLoader::loadAsset(Projectile::texture, "bullet.png");
     auto [window_w, window_h] = static_cast<sf::Vector2f>(this->_window.getSize());
     // Configure player 1 position and colour
     this->_firstPlayer.setSprite(sf::Color::Red);
@@ -22,6 +28,29 @@ GameController::GameController(sf::RenderWindow &window)
     // Configure player 2 position and colour
     this->_secondPlayer.setSprite(sf::Color::Green);
     this->_secondPlayer.setPosition(0.75F * window_w, 0.5F * window_h);
+    // Load font for player lives text
+    sf::Font *font = nullptr;
+    AssetLoader::loadAsset(font, "Minecraftia-Regular.ttf");
+    // Setup player lives texts
+    if (font != nullptr)
+    {
+        const std::array<sf::Text *, 3> lives_texts = {&this->_p1_lives_text, &this->_p2_lives_text,
+                                                       &this->_lives_text};
+        for (auto *lives_text : lives_texts)
+        {
+            lives_text->setFont(*font);
+            lives_text->setString("Player lives: ");
+            lives_text->setFillColor(sf::Color::Yellow);
+            lives_text->setStyle(sf::Text::Bold);
+            lives_text->setCharacterSize(static_cast<int>(window_w / 60));
+        }
+        this->_lives_text.setString("Lives Remaining");
+        this->_lives_text.setStyle(sf::Text::Underlined | sf::Text::Bold);
+        // Set player health text locations
+        this->_lives_text.setPosition(30.0F, window_h - (3 * this->_lives_text.getLocalBounds().height) - 55.0F);
+        this->_p1_lives_text.setPosition(30.0F, window_h - (2 * this->_p1_lives_text.getLocalBounds().height) - 40.0F);
+        this->_p2_lives_text.setPosition(30.0F, window_h - (this->_p2_lives_text.getLocalBounds().height) - 30.0F);
+    }
 }
 
 /**
@@ -69,6 +98,14 @@ bool GameController::runGameTick(float delta_time)
         else
             ++itr;
     }
+
+    // Update player health text
+    this->_p1_lives_text.setString("Player 1:   " + std::to_string(this->_firstPlayer.getLives()));
+    this->_p2_lives_text.setString("Player 2:   " + std::to_string(this->_secondPlayer.getLives()));
+    // Draw player lives text
+    this->_window.draw(this->_lives_text);
+    this->_window.draw(this->_p1_lives_text);
+    this->_window.draw(this->_p2_lives_text);
 
     return false;
 }

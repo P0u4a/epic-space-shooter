@@ -13,7 +13,7 @@ Spaceship::Spaceship(sf::RenderWindow &window, float max_speed, float max_accele
     : GameObject(window, drag), max_speed(max_speed), max_acceleration(max_acceleration), hitbox(1, 3)
 {
     // Load texture and set as sprite texture
-    AssetLoader::loadTextureAsset(this->texture, sprite_file);
+    AssetLoader::loadAsset(this->texture, sprite_file);
     if (this->texture != nullptr)
         this->sprite.setTexture(*this->texture);
     // Debug

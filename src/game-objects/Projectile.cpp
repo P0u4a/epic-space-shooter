@@ -21,7 +21,7 @@ Projectile::Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f 
     this->_sprite.setRotation(rotation - 90); // supposed to rotate image to point same direction as ship
     // Apply custom x and y scaling to sprite
     this->_sprite.setScale({0.2, 0.2});
-};
+}
 
 void Projectile::update(float delta_time)
 {
@@ -47,7 +47,7 @@ void Projectile::update(float delta_time)
 
     // Push changes to window
     this->window.draw(this->_sprite);
-};
+}
 
 void Projectile::setVelocity(const Vector2f &new_velocity)
 {

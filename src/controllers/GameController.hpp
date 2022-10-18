@@ -4,6 +4,7 @@
 #include "game-objects/Projectile.hpp"
 #include "game-objects/spaceship/Player.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <vector>
 
 class GameController
@@ -13,6 +14,9 @@ class GameController
     Player _firstPlayer;
     Player _secondPlayer;
     std::vector<std::unique_ptr<Projectile>> _projectiles;
+    sf::Text _p1_lives_text;
+    sf::Text _p2_lives_text;
+    sf::Text _lives_text;
 
   public:
     explicit GameController(sf::RenderWindow &window);

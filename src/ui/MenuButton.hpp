@@ -1,5 +1,6 @@
 #ifndef SRC_UI_MENUBUTTON_HPP
 #define SRC_UI_MENUBUTTON_HPP
+
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -10,7 +11,7 @@ class MenuButton
 {
   private:
     std::string _label;
-    sf::Font _font;
+    sf::Font *_font = nullptr;
     sf::Text _text;
 
   public:

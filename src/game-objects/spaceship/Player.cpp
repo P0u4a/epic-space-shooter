@@ -24,7 +24,7 @@ Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration
     this->_flames_textures.resize(4);
     // Load flames textures
     for (int i = 0; i < 4; i++)
-        AssetLoader::loadTextureAsset(this->_flames_textures[i], "player-flames-sprite-" + std::to_string(i) + ".png");
+        AssetLoader::loadAsset(this->_flames_textures[i], "player-flames-sprite-" + std::to_string(i) + ".png");
     // Set initial flames sprite position and scaling
     this->_flames_sprite.setPosition(this->sprite.getPosition());
     this->_flames_sprite.setScale(scale);
@@ -35,7 +35,7 @@ Player::Player(sf::RenderWindow &window, float max_speed, float max_acceleration
     this->_explosion_textures.resize(5);
 
     for (int i = 0; i < 5; i++)
-        AssetLoader::loadTextureAsset(this->_explosion_textures[i], "explosion" + std::to_string(i) + ".png");
+        AssetLoader::loadAsset(this->_explosion_textures[i], "explosion" + std::to_string(i) + ".png");
 
     this->_explosion_sprite.setScale(scale);
     if (this->_explosion_textures[0] != nullptr)
