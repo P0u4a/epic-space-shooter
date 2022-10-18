@@ -9,6 +9,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <array>
+#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
@@ -42,15 +43,17 @@ GameController::GameController(sf::RenderWindow &window)
             lives_text->setString("Player lives: ");
             lives_text->setFillColor(sf::Color::Yellow);
             lives_text->setStyle(sf::Text::Bold);
-            lives_text->setCharacterSize(40);
+            lives_text->setCharacterSize(static_cast<int>(window_w / 60));
         }
         this->_lives_text.setString("Lives Remaining");
         this->_lives_text.setStyle(sf::Text::Underlined | sf::Text::Bold);
         // Set player health text locations
-        this->_lives_text.setPosition(30.0F, window_h - (this->_lives_text.getLocalBounds().height) - 400.0F);
-        this->_p1_lives_text.setPosition(30.0F, window_h - (this->_p1_lives_text.getLocalBounds().height) - 300.0F);
-        this->_p2_lives_text.setPosition(30.0F, window_h - (this->_p2_lives_text.getLocalBounds().height) - 200.0F);
+        this->_lives_text.setPosition(30.0F, window_h - (3 * this->_lives_text.getLocalBounds().height) - 55.0F);
+        this->_p1_lives_text.setPosition(30.0F, window_h - (2 * this->_p1_lives_text.getLocalBounds().height) - 40.0F);
+        this->_p2_lives_text.setPosition(30.0F, window_h - (this->_p2_lives_text.getLocalBounds().height) - 30.0F);
     }
+
+    std::cout << window_w << " " << window_h << std::endl;
 }
 
 /**
