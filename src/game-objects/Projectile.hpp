@@ -42,7 +42,7 @@ class Projectile : public GameObject
      *
      * @return True if in hitbox. Else, returns false
      */
-    bool inPlayer();
+    bool inPlayer(sf::Vector2f first, sf::Vector2f second, float delta_time);
 
     inline static sf::Texture *texture = nullptr;
 };
