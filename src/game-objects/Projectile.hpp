@@ -29,7 +29,7 @@ class Projectile : public GameObject
     void setAcceleration(const Vector2f &new_acceleration) override;
 
     bool render;
-    bool inPlayer();
+    bool inPlayer(sf::Vector2f first, sf::Vector2f second, float delta_time);
 
     inline static sf::Texture *texture = nullptr;
 };
