@@ -1,6 +1,14 @@
-# 👽 🔫 🗿
-## space shooter 1000
+# Epic Space Shooter 👾
+A two player space shooter, built entirely in C++, using SFML.
+## Game Controls
+|          | Accelerate | Rotate Right | Rotate Left | Shoot      | Pause Game |
+|----------|------------|--------------|-------------|------------|------------|
+| Player 1 | W          | A            | S           | D          | Escape     |
+| Player 2 | Up Arrow   | Right Arrow  | Left Arrow  | Down Arrow | Escape     |
 
+## Preview
+![Screenshot (28)](https://user-images.githubusercontent.com/66873325/196380572-f2cbc968-ecb8-47b1-9336-1b60680ba234.png)
+![Screenshot (27)](https://user-images.githubusercontent.com/66873325/196380533-66618c70-f796-4504-9b09-b91335ed9e85.png)
 
 ## Building
 
