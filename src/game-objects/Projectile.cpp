@@ -38,7 +38,8 @@ void Projectile::update(float delta_time)
         temp[i] = this->_player.getHitbox().getTransform().transformPoint(this->_player.getHitbox().getPoint(i));
 
     // Check for collisions with player
-    if (inPlayer(temp[0], temp[1], delta_time) || inPlayer(temp[0], temp[2], delta_time) || inPlayer(temp[1], temp[2], delta_time))
+    if (inPlayer(temp[0], temp[1], delta_time) || inPlayer(temp[0], temp[2], delta_time) ||
+        inPlayer(temp[1], temp[2], delta_time))
     {
         this->_player.removeLives(1);
         this->render = false;
@@ -72,32 +73,29 @@ void Projectile::setAcceleration(const Vector2f &new_acceleration)
 
 bool Projectile::inPlayer(sf::Vector2f first, sf::Vector2f second, float delta_time)
 {
-    auto playerVel = second - first;
-    auto bulletVel = this->getVelocity();
-    
+    auto player_vel = second - first;
+    auto bullet_vel = this->getVelocity();
 
-    //if bullet is parallel to this line segment then isnt intersecting
-    if (playerVel.x/bulletVel.x == playerVel.y/bulletVel.y){
+    // if bullet is parallel to this line segment then isnt intersecting
+    if (player_vel.x / bullet_vel.x == player_vel.y / bullet_vel.y)
+    {
         return false;
     }
 
-    auto bulletPos = this->_sprite.getPosition();
-    //how far along hitbox edge bullet will hit
-    float s = (bulletPos.y - first.y + (bulletVel.y/bulletVel.x)*(first.x-bulletPos.x))/
-        (playerVel.y - (bulletVel.y/bulletVel.x)*(playerVel.x));
+    auto bullet_pos = this->_sprite.getPosition();
+    // how far along hitbox edge bullet will hit
+    const float s = (bullet_pos.y - first.y + (bullet_vel.y / bullet_vel.x) * (first.x - bullet_pos.x)) /
+                    (player_vel.y - (bullet_vel.y / bullet_vel.x) * (player_vel.x));
 
-    if (s<0 || s>1){
-        //if s outside 0-1 then means bullet will not hit this edge within its vertecies
+    if (s < 0 || s > 1)
+    {
+        // if s outside 0-1 then means bullet will not hit this edge within its vertecies
         return false;
     }
 
-    //time for bullet to hit hitbox
-    float t = (first.x - bulletPos.x + s*playerVel.x)/(bulletVel.x);
+    // time for bullet to hit hitbox
+    const float t = (first.x - bullet_pos.x + s * player_vel.x) / (bullet_vel.x);
 
-    //checking if time for bullet to hit edge within the next frame
-    if (t<0 || t>delta_time){
-        return false;
-    }    
-
-    return true;
+    // checking if time for bullet to hit edge within the next frame
+    return t >= 0 && t <= delta_time;
 }
