@@ -1,9 +1,10 @@
 #include "./Projectile.hpp"
 #include "cmath"
 #include "util/Vector.hpp"
+#include <SFML/Graphics/Color.hpp>
 
 Projectile::Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f &position, float rotation,
-                       Player &player)
+                       Player &player, sf::Color color)
     : GameObject(window, drag), _player(player), render(true)
 {
     auto theta = static_cast<float>(-rotation * M_PI / 180.0F);
@@ -18,9 +19,11 @@ Projectile::Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f 
     // Set initial sprite position
     this->_sprite.setPosition(position); // window.getsize().x
     // Det initial sprite rotation
-    this->_sprite.setRotation(rotation - 90); // supposed to rotate image to point same direction as ship
+    this->_sprite.setRotation(rotation); // supposed to rotate image to point same direction as ship
     // Apply custom x and y scaling to sprite
-    this->_sprite.setScale({0.2, 0.2});
+    this->_sprite.setScale({6, 6});
+    // Set custom color to sprite
+    this->_sprite.setColor(color);
 }
 
 void Projectile::update(float delta_time)
@@ -84,5 +87,6 @@ bool Projectile::inPlayer()
                                             ((temp[2].x - temp[0].x) * (temp[1].y - temp[0].y)));
 
     // Colliding with player if sum of sub-triangle areas == area of actual hitbox
-    return areas_total == real_hitbox_area;
+    // Add some tolerance for floating point errors
+    return std::abs(areas_total - real_hitbox_area) < 0.1;
 }
