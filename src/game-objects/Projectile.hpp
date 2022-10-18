@@ -5,6 +5,7 @@
 #include "util/FileSystem.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -21,14 +22,26 @@ class Projectile : public GameObject
     Player &_player;
 
   public:
-    Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f &position, float rotation, Player &player);
+    Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f &position, float rotation, Player &player,
+               sf::Color color);
 
+    /**
+     * @brief Update the position, check/handle collisions and render projectile
+     *
+     * @param delta_time Time since the previous frame of the game loop
+     */
     void update(float delta_time) override;
 
     void setVelocity(const Vector2f &new_velocity) override;
     void setAcceleration(const Vector2f &new_acceleration) override;
 
     bool render;
+
+    /**
+     * @brief Check if projectile is inside player hitbox
+     *
+     * @return True if in hitbox. Else, returns false
+     */
     bool inPlayer(sf::Vector2f first, sf::Vector2f second, float delta_time);
 
     inline static sf::Texture *texture = nullptr;

@@ -73,17 +73,17 @@ bool GameController::runGameTick(float delta_time)
     // For both palyers check if they fired and create more projectiles
     if (this->_firstPlayer.fired)
     {
-        auto new_projectile =
-            std::make_unique<Projectile>(this->_window, 0, this->_firstPlayer.getHitbox().getPosition(),
-                                         this->_firstPlayer.getHitbox().getRotation(), this->_secondPlayer);
+        auto new_projectile = std::make_unique<Projectile>(
+            this->_window, 0, this->_firstPlayer.getHitbox().getPosition(),
+            this->_firstPlayer.getHitbox().getRotation(), this->_secondPlayer, sf::Color::Red);
         this->_projectiles.push_back(std::move(new_projectile));
         this->_firstPlayer.fired = false;
     }
     if (this->_secondPlayer.fired)
     {
-        auto new_projectile =
-            std::make_unique<Projectile>(this->_window, 0, this->_secondPlayer.getHitbox().getPosition(),
-                                         this->_secondPlayer.getHitbox().getRotation(), this->_firstPlayer);
+        auto new_projectile = std::make_unique<Projectile>(
+            this->_window, 0, this->_secondPlayer.getHitbox().getPosition(),
+            this->_secondPlayer.getHitbox().getRotation(), this->_firstPlayer, sf::Color::Green);
         this->_projectiles.push_back(std::move(new_projectile));
         this->_secondPlayer.fired = false;
     }

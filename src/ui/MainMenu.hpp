@@ -16,6 +16,12 @@ class MainMenu : public Updatable
 
   public:
     explicit MainMenu(sf::RenderWindow &window);
+
+    /**
+     * @brief Update Menu: if X is pressed, return to game, if Escape is pressed, exit game, Draw menu buttons to screen
+     *
+     * @param delta_time Time since last frame
+     */
     void update(float delta_time) override;
 };
 
