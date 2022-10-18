@@ -9,7 +9,6 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <array>
-#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
@@ -52,8 +51,6 @@ GameController::GameController(sf::RenderWindow &window)
         this->_p1_lives_text.setPosition(30.0F, window_h - (2 * this->_p1_lives_text.getLocalBounds().height) - 40.0F);
         this->_p2_lives_text.setPosition(30.0F, window_h - (this->_p2_lives_text.getLocalBounds().height) - 30.0F);
     }
-
-    std::cout << window_w << " " << window_h << std::endl;
 }
 
 /**
