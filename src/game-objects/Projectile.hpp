@@ -5,6 +5,7 @@
 #include "util/FileSystem.hpp"
 #include "util/Vector.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -21,7 +22,8 @@ class Projectile : public GameObject
     Player &_player;
 
   public:
-    Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f &position, float rotation, Player &player);
+    Projectile(sf::RenderWindow &window, float drag, const sf::Vector2f &position, float rotation, Player &player,
+               sf::Color color);
 
     /**
      * @brief Update the position, check/handle collisions and render projectile
