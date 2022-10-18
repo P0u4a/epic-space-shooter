@@ -23,6 +23,11 @@ class PauseOverlay
     static bool getVisibility();
     static void setVisibility(bool visibility);
 
+    /**
+     * @brief Create pause overlay
+     *
+     * @return True if exit to main menu
+     */
     bool update(float delta_time);
 };
 

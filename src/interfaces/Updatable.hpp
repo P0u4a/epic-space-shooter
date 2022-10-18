@@ -6,6 +6,11 @@ class Updatable
   public:
     virtual ~Updatable() = default;
 
+    /**
+     * @brief Pure virtual function for updating classes derived from updatable
+     *
+     * @param delta_time the time since the previous frame of the game loop, used for frame independent motion
+     */
     virtual void update(float delta_time) = 0;
 };
 
