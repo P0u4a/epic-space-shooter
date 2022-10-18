@@ -87,5 +87,6 @@ bool Projectile::inPlayer()
                                             ((temp[2].x - temp[0].x) * (temp[1].y - temp[0].y)));
 
     // Colliding with player if sum of sub-triangle areas == area of actual hitbox
-    return areas_total == real_hitbox_area;
+    // Add some tolerance for floating point errors
+    return std::abs(areas_total - real_hitbox_area) < 0.1;
 }
