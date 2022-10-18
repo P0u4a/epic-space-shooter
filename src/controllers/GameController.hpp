@@ -20,6 +20,13 @@ class GameController
 
   public:
     explicit GameController(sf::RenderWindow &window);
+    /**
+     * @brief Run single game loop iteration - single game tick
+     *
+     * @param delta_time Time since last frame (in seconds)
+     * @return True if either player has lives <= 0 {game over}.
+     * @return False if game not over
+     */
     bool runGameTick(float delta_time);
 };
 

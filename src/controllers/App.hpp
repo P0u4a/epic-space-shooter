@@ -27,8 +27,15 @@ class App
 
   public:
     App();
+    /**
+     * @return True if in game
+     */
     static bool getIsInGame();
     static void setIsInGame(bool in_game);
+    /**
+     * @brief Begins game loop, creates GameController object, runs game ticks
+     * @return Code of the game {0 if no error, 1 if error}
+     */
     int beginGameLoop();
 };
 
